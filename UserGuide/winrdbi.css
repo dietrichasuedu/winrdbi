@@ -1,0 +1,35 @@
+body.toc {color:#800000;
+          background-color: #ffffff;
+          font-family: Arial,Helvetica, sans-serif;
+          background: url("ASUgray.png");
+         }
+a:link    {text-decoration:none;
+           background-color:transparent;
+           color:#800000;
+           }
+a:visited {text-decoration:none;
+           background-color:transparent;
+           color:#800000;
+           }
+a:active  {text-decoration:none;
+           background-color:transparent;
+           color:#800000;
+           }
+a:hover   {text-decoration:none;
+           background-color:transparent;
+           font-weight:bold;
+           color:#F00000;
+           }
+
+.winrdbi {font-family: Arial,Helvetica, sans-serif;}
+
+.level1 {margin-left: 0px;
+         font-weight:bold;
+         font-size:larger;
+         }
+.level2 {margin-left: 10px;
+        }
+.level3 {margin-left: 20px;
+        }
+.level4 {margin-left: 30px;
+        }

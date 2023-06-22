@@ -1,0 +1,2287 @@
+<html>
+
+<head>
+	<title>WinRDBI User's Guide</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1><a name="Introduction"></a><font color="#000066">Introduction</font></H1>
+<p>WinRDBI is a teaching tool for use in the introductory database course at Arizona State University. It allows
+the user to interactively experiment with Relational Algebra, Domain Relational Calculus, DRC By-Name, Tuple Relational Calculus,
+and Structured Query Language expressions. WinRDBI interacts with a Prolog engine
+that performs the actual database
+manipulations.</p>
+
+<p>WinRDBI is based on RDBI, which was written over a number of years by students as independent study projects.
+RDBI was written in Quintus Prolog and ran under UNIX or VMS. Using RDBI, students interacted with a command-line
+oriented user interface. This required students to use on-campus facilities, either on-site or via dial-up, to
+access the program. Additionally, RDBI could only be used on systems that were licensed to run Quintus Prolog.
+Further information and a description of how to use the original RDBI tool is described in [2].</p>
+
+<p>Later, Version 1.0 of WinRDBI was written. Its interface and use is documented in [3]. In addition to providing
+a simpler, more intuitive Graphical User-Interface (GUI) interface with which students could interact, WinRDBI
+gave students who have IBM compatible computers at home the ability to run RDBI on their own computers. To help
+accomplish that goal, WinRDBI used the Amzi! Prolog Logic Server rather than Quintus Prolog. The Amzi! product
+was chosen because it has no runtime license restrictions for non-commercial use.</p>
+
+<p>Version 1.0 of WinRDBI was used for several semesters at ASU. Over that time, several shortcomings were found.
+For example, the user could interact with only one query at a time. Once a query was completed, it had to be saved
+to a file before a new query could be started. The query was then no longer visible from within the user interface.
+If the user wanted to review a previously completed query, a separate editor or viewer program had to be used.
+This made it very difficult to construct the answer to a question that involved multiple sub-queries. Another related
+shortcoming was that any comments that were entered into the user interface as part of a query were lost when the
+query was saved to disk.</p>
+
+<p>Relative to the database, Version 1.0 provided very minimal editing capabilities. Tuples could be inserted and
+deleted, but not edited. In order to change a field in a tuple, the entire tuple had to be deleted and re-entered.
+The only other option was to save the database as a text file of Prolog facts, call up a text editor to change
+the appropriate data, then reload the database into the user interface. Further, any relations that were materialized
+as part of a query became part of the database. After a query had been executed, it was not possible to save the
+original database without first deleting these extra relations.</p>
+
+<p>These limitations gave rise to the WinRDBI 2.0 version as a complete redesign of the user
+interface of Version 1.0. Version 2.0 is written in Java and uses the Java Foundation Classes (JFC), or Swing,
+to provide the user interface. Version 2.0 still interacts with the Amzi! Prolog Logic Server to perform the database
+operations, but the user interface, described in the next section, is entirely different.</p>
+
+<p>A new language, DRC By-Name, was introduced in WinRDBI 3.0. DRC By-Name has
+the same computational power as Domain Relational Calculus. The advantage of
+this language is the ability to reference an attribute by name rather than by
+position.</p>
+
+<p>WinRDBI 4.0, allows for the storage of the database in
+XML. In addition to the integration of XML into WinRDBI, several other features were
+added to improve the application's functionality and usability.&nbsp; These
+enhacements included: adding the capability to save query results, and adding a
+cut-copy-paste context menu to the query and schema panes.</p>
+
+<p>WinRDBI 5.0 is compiled for Java 7 and installers are provided for both 32-bit and 64-bit architectures.
+The program functionality has also been improved to add features to the editor, such as undo, redo, matching braces, and preferences for font size.</p>
+
+<p>WinRDBI 2020 is compiled using OpenJDK 14.0.1 for 64-bit architecture and released as a zip package. 
+Additional functionality includes the ability to sort data by a column. Selecting the column again reverses the order.</p>
+
+<p>WinRDBI 2021 adds the capability to export and import csv files. Export creates a collection of csv files for a WinRDBI database instance: one for each table. Import imports a csv file with a header line having the syntax:<br />
+<b>field1/type1, field2/type2, ..., fieldn/typen</b><br />
+where a field name must begin with a lowercase letter and must not contain special characters, and a type is either <b>char</b> for a character string or <b>numeric</b>. WinRDBI's export uses this syntax as well for the header line of the exported csv file. </p>
+<hr align="center">
+<h1>
+<a name="User Interface"></a><font color="#000066">User Interface</font></h1>
+<p>WinRDBI is designed as a Multiple Document Interface (MDI) application. In the general sense, a MDI application
+allows you to have more than one &quot;document&quot; open at a time, for example, more than one word-processor
+document or spreadsheet. In the case of WinRDBI, a document may be a database or a query file. While WinRDBI allows
+you to have multiple query files open simultaneously, only one database file may be open at a time.</p>
+<h2><a name="Components"></a><font color="#660099">Components</font></h2>
+<p>The image below shows the initial WinRDBI screen. At this point, you may open an existing query or database
+or create new ones using the File menu or the toolbar.</p>
+<P align="center"><IMG src="initialScreen.png" width="546" height="336" align="bottom" border="0"></p>
+<p>In the following sections, these components will be described in some detail.</p>
+<p>There are two additional components which will be mentioned regularly. The first is called a SchemaPane. A SchemaPane
+is an internal window on the main screen that contains the database schema and
+instance against which the queries
+will be executed. The figure below shows a SchemaPane.</p>
+<P align="center"><IMG src="schemaPane.png" align="bottom" border="0"></p>
+<p>Notice that the pane is vertically divided in two. On the left is a list of the relation names and the number
+of tuples in the relation. On the right is a list of the tuples in the relation. In a SchemaPane, you can add,
+delete, and edit relations and tuples. There may be only one SchemaPane open at a time.
+Additionally, associated with the SchemaPane is a Cut-Copy-Paste pop-up menu
+which can be activated while editing a tuple cell through a double mouse click.
+<p>The second component of the WinRDBI user interface is a QueryPane to enter queries and display the results of the queries. A QueryPane is shown below.</p>
+<P align="center"><IMG src="queryPane.png" align="bottom" border="0"></p>
+<p>A QueryPane is divided into three sections. The top section is a basic text editor for entering queries in one of the five query languages. The top section also contains a Cut-Copy-Paste context menu to allow for easy editing, which. can be activated through a right mouse click. 
+The bottom section, which is similar to a SchemaPane, 
+displays the results of the queries. Note that the relations and tuples representing query results cannot
+be edited, however, the results can be saved via the File/Save Query Results
+menu item when the QueryPane is active.
+The results can also be sorted by clicking on one of the field names.</p>
+<h2><a name="Menu Structure"></a><font color="#660099">Menu Structure</font></h2>
+<p>This section describes the available menu items in WinRDBI.</p>
+<H3><a name="File Menu"></a><font color="#660033">File Menu</font></H3>
+<h4><a name="New Database"></a>New Database</h4>
+<p>The New Database menu item allows you to create a new database. When you select this option,
+the following dialog will be displayed allowing you to choose what type of
+database storage format you would like to use.&nbsp; The two database storage
+options are the RDB file format or the XML file format.&nbsp; 
+RDB is a structured, flat text file format that contains schema information&nbsp;
+interspersed with actual tuple data and uses special delimiters to mark parts of
+schema information and single quotes to differentiate between numeric and char
+attribute data values. The XML file format is a self-describing document that
+includeds&nbsp; DTD and data sections.</p>
+<P align="center"><IMG src="newDatabaseTypeDialog.png" width="330" height="229" align="bottom" border="0"></p>
+
+<P align="left">Once you have selected the appropriate database storage format, you will be given an empty
+SchemaPane, as shown below.</p>
+
+<P align="center"><IMG src="newSchemaPane.png" width="540" height="388" align="bottom" border="0"></p>
+<p>At this point, you can use various toolbar icons or items on the Schema menu to add relations and tuples to
+your database.</p>
+<h4><a name="New Query"></a>New Query</h4>
+<p>When you select the New Query item, the dialog below will be displayed, asking you what kind of queries you
+want to enter: Relational Algebra, Domain Relational Calculus, Tuple Relational Calculus, Structured Query
+Language or DRC By-Name.
+The default is Relational Algebra. You must select one of the options to proceed.</p>
+<P align="center"><IMG src="newQueryPane.png" width="402" height="231" align="bottom" border="0"></p>
+<p>Once you have selected the appropriate type of queries, you will be given an empty QueryPane, as shown below.</p>
+<P align="center"><IMG src="newQueryAlg.png" width="502" height="231" align="bottom" border="0"></p>
+<h4><a name="Open"></a>Open...</h4>
+<p>If you choose &quot;Open...&quot; from the File menu, you will be shown the following dialog from which you
+can choose a query or database file to open.</p>
+<P align="center"><IMG src="openFilePane.png" width="516" height="364" align="bottom" border="0">
+<h4><a name="Close"></a>Close</h4>
+<p>Choosing this item will close the currently active window. If there are unsaved changes, you will be offered
+a chance to save the changes.</p>
+<h4><a name="Save"></a>Save</h4>
+<p>Save the contents of the currently active QueryPane or SchemaPane.</p>
+<h4><a name="Save Query Results"></a>Save Query Results</h4>
+<p>Save the query execution results in an RDB or XML database file.</p>
+<h4><a name="Save All"></a>Save All</h4>
+<p>Save the contents of all open panes.</p>
+<h4><a name="Save As"></a>Save As...</h4>
+<p>The Save As item allows you to save the active file under a new name. If you choose this item, you will see
+a dialog box similar to the one below.</p>
+<h4 align="center"><IMG src="SaveAs.png" width="516" height="366" align="bottom" border="0"></h4>
+<p>You would enter a new file name in the field labeled &quot;File name:&quot;. In the figure above, this is the
+field that contains &quot;empTraining.alg&quot;. If you enter the name of a file that already exists, you will be asked if you want to overwrite the existing file. If you answer no, you will be given the opportunity to enter another file name. If you indicate that you <I>do</I> want to overwrite the existing file, then the save action will proceed normally.</p>
+<h4><a name="Import"></a>Import...</h4>
+<p>The Import item allows you to import a csv file as a relation to the open Schema Pane. If no Schema Pane is selected, a new Schema Pane will be created where the table name is the name of the csv file with its corresponding data. Note that the csv file to be imported must have a header line having the syntax:
+<b>field1/type1, field2/type2, ..., fieldn/typen</b> 
+where a field name must begin with a lowercase letter and must not contain special characters, and a type is either <b>char</b> for a character string or <b>numeric</b>.</p>
+<h4><a name="Export"></a>Export...</h4>
+<p>The Export item allows you to save the active database file using a csv format by generating a csv file for each table. A dialog box similar to the Save As allows the choice of the directory in which to store the resulting csv files and to provide the prefix name for the csv files. For example, if the prefix entered is et, each table will be exported as et_tablename. </p>
+<h4><a name="Print"></a>Print...</h4>
+<p>Choosing the Print item will allow you to print queries, query results, or relations from the database based
+on the active pane. If one or more relations are selected in the results or the database, you will be given the
+option to print only the selected relations or all relations. Multiple non-adjacent relations may be selected by
+holding down the control key on the keyboard while clicking with the left mouse button. An entire region may be
+selected by left-clicking on the first relation, then holding down the shift key while left-clicking another relation.
+Control-shift-left-click can be used to select non-adjacent regions.
+<h4><a name="Exit"></a>Exit</h4>
+<p>Choosing &quot;Exit&quot; from the file menu will close all open windows and exit the program. If there are
+unsaved changes, you will be given the opportunity to save them.</p>
+<H3><a name="Edit Menu"></a><font color="#660033">Edit Menu</font></H3>
+<p>The Edit Menu contains the normal clipboard operations Cut, Copy, and Paste, along with Search and Replace operations.
+The clipboard operations are only available when you are editing queries or when you are editing a specific field
+in a tuple. The Preferences menu is also accessible from here.</p>
+<h4><a name="Undo"></a>Undo</h4>
+<p>The Undo item allows you to undo changes made to the text from a query editor. Undo will undo one character at a time.</p>
+<h4><a Name="Redo"></a>Redo</h4>
+<p>The Redo item allows you to redo changes that were undone through the use of Undo. Redo will redo one character at a time.</p>
+<h4><a name="Cut"></a>Cut</h4>
+<p>The Cut item allows you to copy selected text from a query editor or field editor to the clipboard. The selected
+text is then deleted from the editor.</p>
+<h4><a name="Copy"></a>Copy</h4>
+<p>The Copy item performs essentially the same function as the Cut item, but the selected text is <B><I>not</I></B>
+deleted from the editor.</p>
+<h4><a name="Paste"></a>Paste</h4>
+<p>Choosing the Paste item copies text <I>from</I> the clipboard <I>to</I> the query or field editor.</p>
+<h4><a name="Find"></a>Find...</h4>
+<p>Select the Find item to search for text in the currently active Pane. The pane can be either a QueryPane or
+a SchemaPane. When you select the Find item, you will see the following dialog box:</p>
+<P align="center"><IMG src="findDialog.png" width="245" height="104" align="bottom" border="0"></p>
+<p>Enter the text you wish to find in the field. To initiate the search, click on the &quot;Find&quot; button,
+or press enter. If the text is found, it will be selected. If it is not found, a dialog box will be displayed indicating
+that no matching text was found. To find subsequent occurrences, click on the &quot;Find Next&quot; button. Click
+on the &quot;Close&quot; button to dismiss the dialog box.</p>
+<h4><a name="Replace"></a>Replace...</h4>
+<p>The Replace item allows you to search the active Pane for a string and replace it with another string. Like
+the Find item, Replace can be used in either a QueryPane or a SchemaPane. Note, however, that the Replace option
+<I>does not</I> work in the results portion of a QueryPane, as the result table is not editable. The dialog box
+looks like</p>
+<P align="center"><IMG src="replaceDialog.png" width="330" height="134" align="bottom" border="0"></p>
+<p>Like the Find dialog, enter the text for which you wish to search in the field labeled &quot;Find:&quot;. Then
+enter the replacement text in the field labeled &quot;Replace with:&quot; and click the &quot;Find&quot; button.
+If the text is found, it will be highlighted. To replace the text, click on the &quot;Replace&quot; button. Clicking
+on &quot;Replace&quot; will cause the highlighted text to be replaced with the replacement text and will automatically
+search for the next occurrence of the search string. If you don't wish to replace an occurrence, just click on
+&quot;Find Next&quot;. Of course, click the &quot;Close&quot; button to dismiss the dialog.</p>
+<h4><a name="Preferences"></a>Preferences</h4>
+<p>The Preferences menu allows you to change the font size for WinRDBI and the color used to highlight matching braces
+in the QueryPane.</p>
+<P align="center"><IMG src="preferencesDialog.png" width="298" height="125" align="bottom" border="0"></p>
+<H3><a name="Schema Menu"></a><font color="#660033">Schema Menu</font></H3>
+<h4><a name="Add Relation"></a>Add Relation</h4>
+<p>Choose the Add Relation item to add a new relation to a database. This option is only available when a SchemaPane
+is active. When you choose this item, the following dialog will be displayed</p>
+<P align="center"><IMG src="addRelationDialog.png" align="bottom" border="0"></p>
+<p>The relation name should be entered in the field labeled &quot;Name:&quot;, while the attributes should be entered
+in the table below. Note that relation and attribute names must be identifiers starting with a lower case letter.
+If an attribute is part of the key, put a check in the &quot;Key&quot; column by clicking on the appropriate box.
+Here's a more complete example.</p>
+<P align="center"><IMG src="addRelationType.png" width="279" height="378" align="bottom" border="0"></p>
+<p>Note that the attribute named &quot;eID&quot; is the key attribute. You can create a composite key by checking
+more that one box. The &quot;Type&quot; column allows only two entries, char and numeric, which are selected from
+the drop-down list.</p>
+<p>If you make a mistake in creating an attribute, you can delete or clear the attribute from the Add Relation dialog.
+Select the row and right-click.  This will bring up a menu with options to Clear or Delete.  Clear will reset the row to
+the default, blank row.  Delete will remove the row entirely, which is useful for removing attributes from the beginning
+or middle of the table.</p>
+<P align="center"><IMG src="addRelationContextMenu.png" width="279" height="377" align="bottom" border="0"></p>
+<h4><a name="Copy Relation to Database"></a>Copy Relation to Database</h4>
+<p>When a QueryPane is active, this item is available. It allows you to copy the selected relation from the query
+results to the SchemaPane. In this way, you can save and/or edit the results of a query. This option is only available
+when a QueryPane is active.</p>
+<h4><a name="Delete Relation"></a>Delete Relation</h4>
+<p>The Delete Relation item deletes the selected relations from the database. This option is only available when
+a SchemaPane is active.</p>
+<h4><a name="Edit Relation"></a>Edit Relation</h4>
+<p>Select the Edit Relation option from the Schema menu to bring up a dialog box which will allow you to edit the
+name and attributes of a relation. This dialog box is the same as the &quot;Add Dialog&quot; box, with the restriction that
+you can only change the name of the relation or the names of the attributes. You may also activate the dialog box by 
+double-clicking the left mouse button on the relation name. This option is only available when a SchemaPane is active.</p>
+<h4><a name="Add Tuple"></a>Add Tuple</h4>
+<p>The Add Tuple item adds one or more tuples to the currently selected relation. If there are multiple tuples
+selected, then the number of tuples added will be equal to the number of tuples selected. The new tuples will always
+be added to the end of the table. This option is only available when a SchemaPane is active.</p>
+<h4><a name="Delete Tuple"></a>Delete Tuple</h4>
+<p>Selecting the Delete Tuple item causes the selected tuples to be deleted. This option is only available when
+a SchemaPane is active.</p>
+<h4><a name="Insert Tuple"></a>Insert Tuple</h4>
+<p>Choose the Insert Tuple item to insert one of more tuples into the currently selected relation. If there are
+multiple tuples selected, then the number of tuples inserted will be equal to the number of tuples selected. The
+new tuples will be inserted above the first selected tuple. This option is only available when a SchemaPane is
+active.</p>
+<h4><a name="Check Keys"></a>Check Keys</h4>
+<p>Choose the Check Keys item to verify the primary key integrity of a selected relation. A pop up window will identify the primary key attributes and confirm the primary key is valid. If there are duplicate primary key values, a warning will appear. In the event that the relation does not have a primary key specified, this action prompts for the selection of a primary key.</p>
+<h4><a name="Execute Queries"></a>Execute Queries</h4>
+<p>Execute the queries in the currently active QueryPane. This item is available only when a QueryPane is active
+<I>and</I> a database is loaded. The results will be shows in the table in the bottom half of the QueryPane.</p>
+<H3><a name="Window Menu"></a><font color="#660033">Window Menu</font></H3>
+<p>The Window menu will contain the names of all open panes. If a pane is hidden, you can bring it to the front
+by selecting the corresponding item in the Window menu.</p>
+<h4><a name="Arrange"></a>Arrange</h4>
+<p>In addition to an item corresponding to each pane, the Window menu contains an Arrange item. The Arrange item
+arranges all open panes by tiling the QueryPanes in the upper 3/4 of the main screen and puts the SchemaPane, if
+one is open, in the lower 1/4 of the main screen. The end result will look something like the figure below.</p>
+<P align="center"><IMG src="multipleFiles.png" align="bottom" border="0"></p>
+<H3><a name="Help Menu"></a><font color="#660033">Help Menu</font></H3>
+<p>The Help menu contains options to view the documentation for WinRDBI
+and general information about WinRDBI application.</p>
+<h4><a name="User Guide"></a>User Guide</h4>
+<p>The User Guide is online at http://winrdbi.asu.edu. 
+You can also open the html file for the User Guide locally, 
+which is distributed in the doc folder in the zip file.</p>
+<h4><a name="About WinRDBI"></a>About WinRDBI</h4>
+<p>Displays the following dialog, which indicates the copyright and existence of
+the license agreement and contains WinRDBI's web address.</p>
+<P align="center"><IMG src="about.png" width="308" height="380" align="bottom" border="0"></p>
+<P align="left">&nbsp;</p>
+<h2><a name="Toolbar"></a><font color="#660099">Toolbar</font></h2>
+<p>The following table describes the action performed by each toolbar icon and lists the equivalent menu operation.
+The notation A <font face="Symbol">&reg;</font> B means to select item B from menu A. More specifically, File <font
+face="Symbol">&reg;</font> Open means to select the Open item from the File menu.</p>
+<p>
+<table border="1" width="100%">
+	<tr>
+		<td width="6%" bgcolor="#C0C0C0">
+			<P align="center"><font face="Arial, Helvetica"><I><B>Icons</B></I></font>
+		</td>
+		<td width="54%" bgcolor="#C0C0C0"><font face="Arial, Helvetica"><I><B>Description</B></I></font></td>
+		<td width="28%" bgcolor="#C0C0C0"><font face="Arial, Helvetica"><I><B>Menu Equivalent</B></I></font></td>
+		<td width="12%" bgcolor="#C0C0C0">
+			<P align="center"><font face="Arial, Helvetica"><I><B>Keyboard Shortcut</B></I></font>
+		</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="newDatabase.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Create a new, empty SchemaPane.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#New Database">New Database</a></td>
+		<td width="12%" valign="TOP">Ctrl+D</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="newQuery.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Create a new, empty QueryPane.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#New Query">New Query</a></td>
+		<td width="12%" valign="TOP">Ctrl+Q</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="open.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Open an existing file.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#Open">Open</a></td>
+		<td width="12%" valign="TOP">Ctrl+O</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="save.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Save the contents of the currently active pane.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#Save">Save</a></td>
+		<td width="12%" valign="TOP">Ctrl+S</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="saveAll.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Save the contents of all open panes.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#Save All">Save All</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="print.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Print the currently active pane.</td>
+		<td width="28%" valign="TOP">File <font face="Symbol">&reg; </font><a href="#Print">Print</a></td>
+		<td width="12%" valign="TOP">Ctrl+P</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="cut.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Cut the selected text to the clipboard.</td>
+		<td width="28%" valign="TOP">Edit <font face="Symbol">&reg; </font><a href="#Cut">Cut</a></td>
+		<td width="12%" valign="TOP">Ctrl+X</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="copy.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Copy the selected text to the clipboard.</td>
+		<td width="28%" valign="TOP">Edit <font face="Symbol">&reg; </font><a href="#Copy">Copy</a></td>
+		<td width="12%" valign="TOP">Ctrl+C</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="paste.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Paste the clipboard contents to the current location.</td>
+		<td width="28%" valign="TOP">Edit <font face="Symbol">&reg; </font><a href="#Paste">Paste</a></td>
+		<td width="12%" valign="TOP">Ctrl+V</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="addRelation.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Add a relation to the current database.</td>
+		<td width="28%" valign="TOP">Schema<font face="Symbol"> &reg; </font><a href="#Add Relation">Add Relation</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="deleteRelation.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Delete the selected relations from the current database.</td>
+		<td width="28%" valign="TOP">Schema <font face="Symbol">&reg; </font><a href="#Delete Relation">Delete Relation</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="goldKey.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Check the primary key for the selected tabel.</td>
+		<td width="28%" valign="TOP">Schema <font face="Symbol">&reg; </font><a href="#CheckKeys">Check Keys</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="insertTuple.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Insert one or more tuples into the current relation.</td>
+		<td width="28%" valign="TOP">Schema <font face="Symbol">&reg; </font><a href="#Insert Tuple">Insert Tuple</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="deleteTuple.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Delete the selected tuples from the current relation.</td>
+		<td width="28%" valign="TOP">Schema <font face="Symbol">&reg; </font><a href="#Delete Tuple">Delete Tuple</a></td>
+		<td width="12%" valign="TOP">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="find.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Search for text in the active QueryPane or SchemaPane.</td>
+		<td width="28%" valign="TOP">Edit <font face="Symbol">&reg; </font><a href="#Find">Find</a></td>
+		<td width="12%" valign="TOP">Ctrl+F</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="replace.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Replace text in the active QueryPane or SchemaPane.</td>
+		<td width="28%" valign="TOP">Edit <font face="Symbol">&reg; </font><a href="#Replace">Replace</a></td>
+		<td width="12%" valign="TOP">Ctrl+R</td>
+	</tr>
+	<tr>
+		<td width="6%">
+			<P align="center"><IMG src="execute.png" width="16" height="16" align="bottom" border="0">
+		</td>
+		<td width="54%" valign="TOP">Execute the queries in the active QueryPane.</td>
+		<td width="28%" valign="TOP">Schema <font face="Symbol">&reg; </font><a href="#Execute Queries">Execute Queries</a></td>
+		<td width="12%" valign="TOP">Ctrl+E</td>
+	</tr>
+</table>
+<hr align="center">
+<h1>
+<a name="Language Assumptions and BNF"></a><font color="#000080">Language Assumptions and BNF</font></h1>
+<p>This section provides an overview of the assumptions for each language 
+provided by WinRDBI, including its BNF.  Detailed language examples are 
+provided in [1] and on the WinRDBI Web [4].  The WinRDBI distribution includes
+the database and queries for the EMPLOYEE TRAINING enterprise [1].</p>
+<p>The WinRDBI languages are case sensitive.  
+Relation and attribute names must be identifiers starting with a lowercase 
+letter.  Constants in all languages and in the database are either (single)
+quoted strings or numeric constants.  Variables are
+identifiers that start with an uppercase letter.</p>
+<p>The grammars described in this section use the following conventions:
+terminal symbols are in <B>boldface</B>, non-terminal symbols are in angle brackets
+(&lt;&gt;), patterns are in <I>italics</I>, and braces ({}) indicate optional 
+items. The following grammar provides the syntax for creating intermediate
+tables with optional renaming of attributes for relational algebra, DRC, TRC,
+and SQL.  (DRC By-Name has an inherent syntax for creating named tables with
+column names identified.) </p>
+
+<p>
+<table border="0" CELLSPACING="0" width="100%">
+	<tr>
+		<td width="26%">&lt;Query_Definition&gt;</td>
+		<td width="5%">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="69%">&lt;Query&gt; <B>;</B></td>
+	</tr>
+	<tr>
+		<td width="26%">&nbsp;</td>
+		<td width="5%">
+			<P align="center">|
+		</td>
+		<td width="69%">&lt;Assignment_Statement&gt; <B>;</B></td>
+	</tr>
+	<tr>
+		<td width="26%">&lt;Assignment_Statement&gt;</td>
+		<td width="5%">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="69%"><I>Relation_Name</I> <B>:=</B> &lt;Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="26%">&nbsp;</td>
+		<td width="5%">
+			<P align="center">|
+		</td>
+		<td width="69%"><I>Relation_Name</I> <B>(</B> &lt;Attribute_List&gt; <B>)</B> <B>:=</B> &lt;Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="26%">&lt;Attribute_List&gt;</td>
+		<td width="5%">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="69%"><I>Attribute_Name</I> <B>,</B> &lt;Attribute_List&gt;</td>
+	</tr>
+	<tr>
+		<td width="26%">&nbsp;</td>
+		<td width="5%">
+			<P align="center">|
+		</td>
+		<td width="69%"><I>Attribute_Name</I></td>
+	</tr>
+</table>
+<h2><a name="RA BNF"></a><font color="#660099">Relational Algebra</font></h2>
+<p>The relational algebra is a procedural language with the following assumptions regarding its operators:
+
+<ul>
+	<li>The union, difference and intersect operators require that the operand relations are compatible, i.e., the
+	operand relations have identical schemas.
+	<li>The (Cartesian) product operator requires that the operand relations have disjoint attribute names.
+	<li>The njoin (natural join) operator does <B><I>NOT</I></B> require common attribute names in the operand relations;
+	if the operand relations have disjoint attribute names, then the njoin results in a Cartesian product.
+	<li>The <font face="Symbol">q</font>-join and division operators are purposely not provided by the interpreter
+	so that students investigate the equivalent definitions of these operators in terms of the fundamental relational
+	algebra operators.
+</ul>
+
+<p>
+<table border="0" CELLSPACING="0" width="100%">
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Query&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Expression&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Expression&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">( &lt;Expression&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Select_Expr&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Project_Expr&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Binary_Expr&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Select_Expr&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><B>select</B> &lt;Condition&gt; ( &lt;Expression&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Project_Expr&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><B>project</B> &lt;Attributes&gt; ( &lt;Expression&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Binary_Expr&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">( &lt;Expression&gt; ) &lt;Binary_Op&gt; ( &lt;Expression&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Condition&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;And_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;And_Condition&gt; or &lt;Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;And_Condition&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Rel_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Rel_Formula&gt; and &lt;And_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Rel_Formula&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Operand&gt; &lt;Relational_Op&gt; &lt;Operand&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">( &lt;Condition&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Binary_Op&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><B>union</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>njoin</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>product</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>difference</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>intersect</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Attributes&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>, &lt;Attributes&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Operand&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Relational_Op&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><B>=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&nbsp;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&gt;=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;=</B></td>
+	</tr>
+</table>
+
+<h2><a name="DRC BNF"></a><font color="#660099">Domain Relational Calculus</font></h2>
+<p>The domain relational calculus (DRC) language is a declarative, positional language where variables range over
+the domain of attributes. Note that constants and anonymous variables (_) may be used within a DRC expression.
+For example, consider the query that returns the names and salaries of the 
+Database Administrator employees earning more than 35000:</p>
+<PRE>{ LName, FName, Salary | 
+    employee(_, LName, FName,'Database Administrator', Salary) and Salary &gt; 35000};</PRE>
+<p>The interpreter assumes that</p>
+
+<ul>
+	<li>the names of the attributes in the resulting schema is a lowercase version of the variable names, which must
+	be an identifier starting with an uppercase letter. In the above example, the result schema has the attributes
+	lname, fname, and salary.
+	<li>the query expression is safe, assuming the left-to-right evaluation of Prolog. The above query expression is
+	safe, however, the following logically equivalent version of the example is not allowed:
+	<PRE>{ LName, FName, Salary | 
+    Salary &gt; 35000 and employee(_, LName, FName,'Database Administrator',Salary) };</PRE>
+	<p>The rule of thumb for writing safe expressions is to make sure that a variable is bound to a value before it
+	is used, either in a comparison or within a negation.</p>
+</ul>
+
+<p>
+<table border="0" CELLPADDING="0" CELLSPACING="0" width="100%">
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Query&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">{ &lt;Variables&gt; | &lt;Formula&gt; }</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Formula&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">&lt;And_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">&lt;And_Formula&gt; <B>or</B> &lt;Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;And_Formula&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">&lt;Sub_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">&lt;Sub_Formula&gt; <B>and</B> &lt;And_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Sub_Formula&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I> ( &lt;Vars_Cons&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">( &lt;Formula&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>not</B> &lt;Sub_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">&lt;Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">&lt;Quantified_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Quantified_Formula&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">&lt;Quantifier&gt; ( &lt;Formula&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">&lt;Quantifier&gt; &lt;Quantified_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Quantifier&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">( <B>exists</B> &lt;Variables&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP">( <B>forall</B> &lt;Variables&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Condition&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP">&lt;Operand&gt; &lt;Relational_Op&gt; &lt;Operand&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Operand&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Variables&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I>, &lt;Variables&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Vars_Cons&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><I>Identifier</I>, &lt;Vars_Cons&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><I>Constant</I> , &lt;Vars_Cons&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Relational_Op&gt;
+		</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="77%" valign="TOP"><B>=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>&lt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>&lt;&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>&gt;=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="5%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="77%" valign="TOP"><B>&lt;=</B></td>
+	</tr>
+</table>
+<h2><a name="DBN BNF"></a><font color=#660099>DRC By-Name</font></h2>
+<p>The DRC By-Name language is a declarative
+language that references the domain of attributes using the attribute
+name instead of position. Attributes needed in a query are
+named and given a variable or constant.  Attributes that are not needed in a 
+particular query are left out entirely.  The same query that was given under
+the Domain Relation Calculus BNF is written as follows in DRC By-Name: </p>
+<PRE>dbn1(lname: L, fname: F, salary: S) &lt;- 
+    employee(eSalary: S, eFname: F, eTitle:'Database Administrator', eLname: L) 
+    and S &gt; 35000;</PRE>
+
+<p>Note that the position of the attributes in the tables do not matter.  
+However, the attribute names MUST match attributes in the given table. Also, 
+DRC By-Name syntax overrides the syntax for creating intermediate tables used
+in DRC, TRC, relational algebra, and SQL.  (The BNF for the intermediate tables
+was given at the beginning of the Language Assumptions and BNF section.)  In
+the above example, dbn1 will be the name of the intermediate table with column
+headings: lname, fname, and salary.  These column names can be any name the
+user desires, as long as they start with a lower case letter. 
+</p>
+<p>The interpreter assumes that</p>
+<ul>
+  <li>the variable names are uppercase letters</li>
+  <li>the attribute names used in the formula are exact attributes found within the schema</li>
+  <li>the query expression is safe, assuming the left-to-right evaluation of 
+      Prolog. The rule of thumb for writing safe expressions is to make sure 
+      that a variable is bound to a value before it is used, either in a 
+      comparison or within a negation.</li></ul>
+<p>
+<table cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <Tbody>
+  <tr>
+  	<td vAlign=top width="18%">
+  		<P align=right>&lt;Query&gt; </p></td>
+  	<td vAlign=top align=middle width="5%">
+  		<P align=center><font face=Symbol>®</font> </p></td>
+	<td vAlign=top width="77%">table_name (&lt;Variables&gt;) &lt;&ndash; &lt;Formula&gt;</td></tr>
+   <tr>
+        <td vAlign=top width="18%">
+	        <P align=right>&lt;Formula&gt; </p></td>
+	<td vAlign=top align=middle width="5%">
+		<P align=center><font face=Symbol>®</font> </p></td>
+	<td vAlign=top width="77%">&lt;And_Formula&gt;</td></tr>
+   <tr>
+	<td vAlign=top width="18%">&nbsp;</td>
+  	<td vAlign=top align=middle width="5%">
+	        <P align=center>| </p></td>
+	<td vAlign=top width="77%">&lt;And_Formula&gt; <B>or</B> 
+	      &lt;Formula&gt;</td></tr>
+    <tr>
+    	<td vAlign=top width="18%">
+        	<P align=right>&lt;And_Formula&gt; </p></td>
+	<td vAlign=top align=middle width="5%">
+	        <P align=center><font face=Symbol>®</font> </p></td>
+	<td vAlign=top width="77%">&lt;Sub_Formula&gt;</td></tr>
+    <tr>
+ <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">&lt;Sub_Formula&gt; <B>and</B> 
+    &lt;And_Formula&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Sub_Formula&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%"><I>Schema_Name</I> ( &lt;Vars_Cons&gt; )</td></tr>
+ <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">( &lt;Formula&gt; )</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>not</B> &lt;Sub_Formula&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">&lt;Condition&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">&lt;Quantified_Formula&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Quantified_Formula&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+    <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%">&lt;Quantifier&gt; ( &lt;Formula&gt; )</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">&lt;Quantifier&gt; 
+  &lt;Quantified_Formula&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Quantifier&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%">( <B>exists</B> &lt;Variables&gt; )</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%">( <B>forall</B> &lt;Variables&gt; )</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+ <P align=right>&lt;Condition&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%">&lt;Operand&gt; &lt;Relational_Op&gt; 
+      &lt;Operand&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Operand&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%"><I>Identifier</I></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><I>Constant</I></td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Variables&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%"><I>Column_name: Indentifier</I></td></tr>
+  <tr>
+  <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><I>Column_name: Identifier</I>, &lt;Variables&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Vars_Cons&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%"><I>Attribute_name: Identifier</I></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><I>Attribute_name: Identifier</I>, &lt;Vars_Cons&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><I>Attribute_name: Constant</I></td></tr>
+  <tr>
+  <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><I>Attribute_name: Constant</I> , &lt;Vars_Cons&gt;</td></tr>
+  <tr>
+    <td vAlign=top width="18%">
+      <P align=right>&lt;Relational_Op&gt; </p></td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center><font face=Symbol>®</font> </p></td>
+    <td vAlign=top width="77%"><B>=</B></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>&gt;</B></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+  <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>&lt;</B></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>&lt;&gt;</B></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>&gt;=</B></td></tr>
+  <tr>
+    <td vAlign=top width="18%">&nbsp;</td>
+    <td vAlign=top align=middle width="5%">
+      <P align=center>| </p></td>
+    <td vAlign=top width="77%"><B>&lt;=</B></td></tr></Tbody></table>
+
+<h2><a name="TRC BNF"></a><font color="#660099">Tuple Relational Calculus</font></h2>
+<p>The tuple relational calculus (TRC) language is a declarative language similar to DRC except that variables
+range over tuples and attributes are referenced using dot notation. The interpreter only evaluates safe TRC expressions.
+In TRC, this means that the tuple variable must be bound to its associated relation before the values of its attributes
+can be accessed and before the variable is used within a negation. Here is the TRC version of the query that returns
+the names and salaries of the female employees earning more than 35000:</p>
+<PRE>{ E.lname, E.fname, E.salary | 
+    employee(E) and E.sex='F' and E.salary&gt;35000 };</PRE>
+<p>The only additional assumption for TRC is a shorthand notation for selecting all attributes associated with
+a tuple variable. For example, the following shows the result of the above query when all employee attributes are
+returned:</p>
+<PRE>{ E | employee(E) and E.sex='F' and E.salary&gt;35000 };</PRE>
+<p>
+<table border="0" CELLSPACING="0" width="100%">
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Query&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">{ &lt;Vars_Attrs&gt; | &lt;Formula&gt; }</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Formula&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;And_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;And_Formula&gt; <B>or</B> &lt;Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;And_Formula&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Sub_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Sub_Formula&gt; <B>and</B> &lt;And_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Sub_Formula&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I> ( <I>Variable</I> )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">( &lt;Formula&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>not</B> &lt;Sub_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Quantified_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Quantified_Formula&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Quantifier&gt; ( &lt;Formula&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">&lt;Quantifier&gt; &lt;Quantified_Formula&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Quantifier&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">( <B>exists</B> &lt;Variables&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP">( <B>forall</B> &lt;Variables&gt; )</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Condition&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP">&lt;Operand&gt; &lt;Relational_Op&gt; &lt;Operand&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Operand&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>. <I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Vars_Attrs&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>, &lt;Vars_Attrs&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>.<I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>.<I>Identifier</I>, &lt;Vars_Attrs&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Variables&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><I>Identifier</I>, &lt;Variables&gt;</td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">
+			<P align="RIGHT">&lt;Relational_Op&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="78%" valign="TOP"><B>=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&gt;=</B></td>
+	</tr>
+	<tr>
+		<td width="18%" valign="TOP">&nbsp;</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="78%" valign="TOP"><B>&lt;=</B></td>
+	</tr>
+</table>
+
+<h2><a name="SQL BNF"></a><font color="#660099">Structured Query Language</font></h2>
+<p>The syntax recognized by the interpreter is the original SQL standard - not SQL-92. In addition to the basic
+select-from-where query expression, the interpreter handles grouping, aggregation, having, ordering, and nested
+subqueries. The interpreter, however, has some simplifying assumptions:</p>
+
+<ul>
+	<li>Although the language allows nested queries and aggregation, a nested subquery cannot involve aggregation;
+	aggregation must appear in the outermost query. This is not a severe restriction. The user need only break such
+	a query into multiples queries.
+	<p>For example, consider the query to find the employees earning the maximum salary over the COMPANY database.
+	Although the first SQL query is a valid query in the standard, it is not allowed by the tool. But the query can
+	be evaluated using the second formulation.
+</ul>
+
+
+
+<BLOCKQUOTE>
+	<PRE><font face="Courier New, Courier">1. select ssn, salary
+   from   employee
+   where  salary = (select max(salary)
+                    from   employee);</font></PRE>
+	<PRE><font face="Courier New, Courier">2. maxsalary(maxSal) := select max(salary)
+                        from   employee;
+   select ssn, salary
+   from   employee, maxsalary
+   where  salary=maxSal;</font></PRE>
+
+</BLOCKQUOTE>
+
+
+<ul>
+	<li>The language allows the use of joined table expressions in the FROM clause.  However, the language does 
+	not allow aliasing of joined tables.  The user is still able to reference any attribute that is needed 
+	from a table in a join expression.   
+	<p>Consider the query to find the employees who have taken a database course over the EMPLOYEE TRAINING database.
+	The first SQL query is valid by the standard, it is not allowed by the tool.  This query can be evaluated using the 
+	second version.
+</ul>
+
+<BLOCKQUOTE>
+	<PRE><font face="Courier New, Courier">1. select distinct EmpDB.eID, EmpDB.eLast, EmpDB.eFirst, EmpDB.eTitle
+   from   (employee natural join (takes natural join dbCourse)) as EmpDB;
+                    </font></PRE>
+	<PRE><font face="Courier New, Courier">2. select distinct E.eID, E.eLast, E.eFirst, E.eTitle
+   from   (employee E natural join (takes T natural join dbCourse d));
+   </font></PRE>
+
+</BLOCKQUOTE>
+<ul>
+	<li>Finally, the ORDER BY clause has a restriction that limits ordering to either ascending or descending for the entire clause.  Mixed descending and
+ascending will not work. 
+</ul>
+
+<p>
+<table border="0" CELLSPACING="0" width="100%" bordercolor="#000000">
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Query&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Query_Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Query_Term&gt; <B>union [all] </B>&lt;Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Query_Term&gt; <B>intersect </B>&lt;Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Query_Term&gt; <B>except </B>&lt;Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Query_Term&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Sub_Query&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>(</B>&lt;Query&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Sub_Query&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>select </B>&lt;Select_Vars&gt; <B>from </B>&lt;Expression&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="80%" valign="TOP">[&lt;Group_Clause&gt; [&lt;Having_Clause&gt;] ] [&lt;Order_Clause&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Select_Vars&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>*</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">[<B>distinct</B>] &lt;Scalar_Varlist&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">[<B>all</B>] &lt;Scalar_Varlist&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Scalar_Varlist&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Scalar_Vars&gt;[[<B>as</B>]<B> columnName </B>] [, &lt;Scalar_Varlist&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Scalar_Vars&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Term&gt; - &lt;Scalar_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Term&gt; + &lt;Scalar_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Term&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Factor&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Factor&gt;<B> </B>/<B> </B>&lt;Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Factor&gt; *<B> &lt;</B>Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Factor&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">[+ | -] &lt;Primary&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Primary&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Atom&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Aggregation_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>(</B>&lt;Scalar_Var&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Atom&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Aggregation_Var&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>count(*)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>count(distinct </B>&lt;Simple_Var&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Function&gt; <B>(</B>[<B>distinct</B>] &lt;Simple_Var&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Function&gt; <B>(</B>[<B>all</B>] &lt;Simple_Var&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Function&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>min</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>max</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>avg</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>sum</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Simple_Var&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><I>Identifier.Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Expression&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Relation_List&gt; [<B>where</B> &lt;Search_Condition&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Relation_List&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Table_Reference&gt; [<B>,</B> &lt;Relation_List&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Table_Reference&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><I>Identifier</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><I>Identifier Alias</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Join_Table_Expression&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Join_Table_Expression&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Table_Reference&gt; <B>natural join</B> &lt;Table_Reference&gt; </td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Table_Reference&gt; <B>join</B> &lt;Table_Reference&gt; <B>on</B> &lt;Search_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;(Join_Table_Expression)&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Search_Condition&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Boolean_Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Boolean_Term&gt; <B>or</B> &lt;Search_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Boolean_Term&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Boolean_Factor&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Boolean_Factor&gt; <B>and</B> &lt;Boolean_Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Boolean_Factor&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">[<B>not</B>] &lt;Boolean_Primary&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Boolean_Primary&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Predicate&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>(</B>&lt;Search_Condition&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Predicate&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Exists_Predicate&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;In_Predicate&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Comparison_Predicate&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Exists_Predicate&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>exists (</B>&lt;Simple_Subquery&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;In_Predicate&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt; [<B>not</B>] <B>in (&lt;</B>Simple_Subquery&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt; [<B>not</B>] <B>in</B> <B>(</B>&lt;Atom_List&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Atom_List&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Atom&gt; [<B>,</B> &lt;Atom_List&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Comparison_Predicate&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt;&lt;Comparison&gt;&lt;Simple_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt;&lt;Comparison&gt;&lt;Simple_Subquery&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Comparison&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>=</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>&lt;&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>&lt;</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>&gt;</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>&lt;=</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>&gt;=</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Group_Clause&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>group by</B> &lt;Group_Varlist&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Group_Varlist&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt; [<B>,</B> &lt;Group_Varlist&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Clause&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>having</B> &lt;Having_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Condition&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Having_Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Having_Term&gt; <B>or</B> &lt;Having_Condition&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Term&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Having_Factor&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP">&lt;Having_Factor&gt; <B>and</B> &lt;Having_Term&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Factor&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">[<B>not</B>] &lt;Having_Primary&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Primary&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Having_Compare&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><B>(</B>&lt;Having_Condition&gt;<B>)</B></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Having_Compare&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Aggregation_Var&gt;&lt;Comparison&gt;&lt;Aggregation_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Order_Clause&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP"><B>order by</B> &lt;Order_Varlist&gt; [<B>asc</B> | <B>desc</B>]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Order_Varlist&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Order_Var&gt; [<B>,</B> &lt;Order_Varlist&gt;]</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Order_Var&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Simple_Var&gt;</td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT"><font SIZE="4">&nbsp;</font>
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center">|
+		</td>
+		<td width="80%" valign="TOP"><I>Constant</I></td>
+	</tr>
+	<tr>
+		<td width="16%" valign="TOP">
+			<P align="RIGHT">&lt;Simple_Subquery&gt;
+		</td>
+		<td width="4%" align="center" valign="TOP">
+			<P align="center"><font face="Symbol">&reg;</font>
+		</td>
+		<td width="80%" valign="TOP">&lt;Sub_Query&gt; without &lt;Aggregation_Var&gt;, &lt;Group_Clause&gt;, or &lt;Order_Clause&gt;</td>
+	</tr>
+</table>
+<p>
+<hr align="center">
+<h1>
+<a name="Known Issues"></a><font color="#000066">Known Issues</font></h1>
+
+<ul>
+	<li>Declarative languages and variable reuse: There may be an issue with
+	reusing variable names/table aliases in the <B>same</B> query for DRC, 
+	TRC, SQL, and DBN.  Although these names are scoped and theoretically 
+	can be reused, there is a suspicion that this reuse may cause a problem
+	under certain circumstances.  Example: (exists E)(...E...) and (exists 
+	E)(...E...)  So avoid reusing a variable name in the <B>same</B> query.
+	There is no problem with reusing the same variable name in different
+	queries.
+	<li>The key constraint is not checked when tuples are inserted or edited. 
+	This was a design decision for this version. Various forms of constraint
+	checking are planned for the future of WinRDBI.
+	<li>A bug in Java's Swing API causes the highlighting for cut-and-paste
+      operations to apparently stop functioning in the query editor after
+      switching between different QueryPanes or between a QueryPane and the
+      SchemaPane. In reality, text can still be selected, it is just not
+      highlighted on the screen. There are two workarounds. First, try switching
+      windows using the window names on the Window menu. If that does not work,
+      cover the WinRDBI window with another application's window -- any
+      application will do. Then bring the WinRDBI window back to the front. The
+      ability to highlight will be restored.
+	<li>Occasionally, the underlying Prolog code will get into a state from
+      which it cannot recover following a valid exception message. A
+      &quot;Reset&quot; item was added to the Schema menu to try to reset the
+      Prolog engine; however, this operation currently does not achieve the
+      desired effect. The only known workaround is to exit and restart WinRDBI.
+	<li>In the Save Query Results dialog, the File name field displays the
+      default query results file name.&nbsp; However, in displaying the default
+      file name, Java does not allow users to traverse the directory structures
+      once the user has double clicked into a directory.&nbsp; Users can still
+      traverse down the directory, but not back up.
+</ul>
+
+<hr align="center">
+<h1>
+<a name="Acknowledgements"></a><font color="#000066">Acknowledgments</font></h1>
+<p>WinRDBI is the realization of the efforts of several students at ASU:&nbsp;
+Eric Eckert, Changguan Fan, April Granroth, Isabel Hankes, Chien-Ho Ho, Ana Hun, Sonia Jain, Spencer Pearson, Kevin Piscator, Rick Rankin, Sarah Simons, and Adrian Sylvester.</p>
+<hr align="center">
+<h1>
+<a name="References"></a><font color="#000066">References</font></h1>
+
+<OL>
+	<li>Dietrich, S. W., <I>Understanding Databases: Concepts and Practice,</I>
+	John Wiley &amp; Sons, Inc., 2021.
+	<li>Dietrich, S. W., <I>Understanding Relational Database Query 
+	Languages,</I> Prentice Hall, 2001.
+	<li>Dietrich, S. W., An Educational Tool for Relational Query Languages, <I>Computer Science Education</I>, Vol.
+	4, 1993, pp. 157-184.
+	<li>Dietrich, S. W., Eckert, E., and Piscator, K., WinRDBI: A Windows-based Relational Database Educational Tool,
+	<I>SIGCSE</I>, 1997, pp. 126-130.
+	<li>  <a href="http://winrdbi.asu.edu"</a>http://winrdbi.asu.edu</li>
+</OL>
+
+
+</body>
+
+</html>
