@@ -1,0 +1,152 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Domain Relational Calculus
+%  Queries in Chapter
+
+% EMPLOYEE TRAINING 
+% employee(eID, eLast, eFirst, eTitle, eSalary)      primary key: eID
+% technologyArea(aID, aTitle, aURL, aLeadID)      primary key: aID
+%    foreign key (aLeadID) references employee(eID)
+% trainingCourse(cID, cTitle, cHours, areaID)        primary key: cID
+%    foreign key (areaID) references technologyArea(aID) 
+% takes(eID, cID, tDate)                                           primary key: eID, cID
+%    foreign key (eID) references employee(eID)
+%    foreign key (cID) references trainingCourse(cID)
+
+% 4.3.1 Fundamental Query Expressions
+
+% Table 4.10  DRC Sample Filtering Queries
+
+drc_Managers(eID, eLast, eFirst, eTitle, eSalary)  :=
+{ I, L, F, T, S | employee(I, L, F, T, S) and T = 'Manager' };
+
+drc_Titles(eTitle) :=
+{ T | employee(_, _, _, T, _) };
+
+drc_SalariesLT60K(eLast, eFirst, eSalary) :=
+{ L, F, S | employee(_, L, F, _, S) and S < 60000 };
+
+%----------------------------------------------------------------
+
+drc_employeeLeads( eID, eLast, eFirst, eTitle, eSalary, aID, aTitle, aURL, aLeadID) :=
+{ EID, ELast, EFirst, ETitle, ESalary, AID, ATitle, AURL, ALeadID |
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	technologyArea(AID, ATitle, AURL, ALeadID) and EID = ALeadID };
+
+drc_employeeLeads_shortcut(eID, eLast, eFirst, eTitle, eSalary, aID, aTitle, aURL) :=
+{ EID, ELast, EFirst, ETitle, ESalary, AID, ATitle, AURL |
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	technologyArea(AID, ATitle, AURL, EID) };
+
+drc_managers_shortcut(eID, eLast, eFirst, eSalary) :=
+{ EID, ELast, EFirst, ESalary | employee(EID, ELast, EFirst, 'Manager', ESalary) };
+
+
+% 4.3.2 Quantification of Variables
+
+drc_CourseTitleOfferings(cTitle, tDate) :=
+{ CTitle, TDate | (exists CID)
+	(trainingCourse(CID, CTitle, _, _) and takes(_, CID, TDate)  ) };
+
+% Table 4.11  DRC Sample Set Queries 
+
+drc_ManagerOrProjectLead(eID, eLast, eFirst, eTitle, eSalary) :=
+{ I, L, F, T, S | employee(I, L, F, T, S) and
+	(T = 'Manager' or T = 'Project Lead') };
+
+drc_ManagersNoCourses(eID, eLast, eFirst, eTitle, eSalary) := 
+{ I, L, F, T, S | employee(I, L, F, T, S) and T= 'Manager' and 
+	not takes(I, _, _) };
+
+drc_ManagersTookCourses(eID, eLast, eFirst, eTitle, eSalary) :=
+{ I, L, F, T, S | employee(I, L, F, T, S) and T='Manager' and takes(I, _, _) };
+
+%-------------------------------------------------------------------------
+
+drc_ManagersNoDBCourses(eID, eLast, eFirst, eTitle, eSalary) :=
+{ I, L, F, T, S | employee(I, L, F, T, S) and T = 'Manager' and
+	not (exists CID)(takes(I, CID, _) and trainingCourse(CID, _, _, 'DB') ) };
+
+drc_ManagersDBCourses(eID, eLast, eFirst, eTitle, eSalary) :=
+{ I, L, F, T, S | employee(I, L, F, T, S) and T = 'Manager' and
+	(exists CID)(takes(I, CID, _) and trainingCourse(CID, _, _, 'DB') ) };
+
+% Division
+
+drc_divUniversal(eID) :=
+{ EID | employee(EID, _, _, _, _) and
+	(forall CID) (not trainingCourse(CID, _, _, _) or takes(EID, CID, _) ) };
+
+drc_divExistential(eID) :=
+{ EID | employee(EID,_, _, _, _) and
+	not (exists CID) (trainingCourse(CID, _, _, _) and not takes(EID, CID, _) ) };
+
+% Relational completeness
+
+% Table 4.15  DRC Summary of Fundamental Employee Training Queries
+
+q_select(eID, eLast, eFirst, eTitle, eSalary) := 
+{ EID, ELast, EFirst, ETitle, ESalary |
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	ESalary > 100000 };
+
+q_project(eLast, eFirst, eTitle) :=
+{ ELast, EFirst, ETitle | employee(_, ELast, EFirst, ETitle, _) };
+
+managers(eID) := { EID | employee(EID, _, _, 'Manager', _) };
+projectLeads(eID) := { EID | employee(EID, _, _, 'Project Lead', _) };
+q_union(eID) := { EID | managers(EID) or projectLeads(EID) };
+
+%managers := { EID | employee(EID, _, _, 'Manager', _) };
+takenCourse(eID) := { EID | takes(EID, _, _) };
+q_difference(eID) := { EID | managers(EID) and not takenCourse(EID) };
+
+q_cartesian_product(eID, cID) := 
+{ EID, CID | employee(EID, _, _, _, _) and trainingCourse(CID, _, _, _) };
+
+%--------------------------------------------------------------------------------------
+
+% Table 4.16  DRC Summary of Additional Employee Training Queries
+
+%managers := { EID | employee(EID, _, _, 'Manager', _) };
+%takenCourse := { EID | takes(EID, _, _) };
+q_intersection(eID) := 
+{ EID | managers(EID) and takenCourse(EID) };
+
+q_theta_join(eID, eLast, eFirst, eTitle, eSalary,  aID, aTitle, aURL, aLeadID) := 
+{ EID, ELast, EFirst, ETitle, ESalary, AID, ATitle, AURL, ALeadID |
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	technologyArea(AID, ATitle, AURL, ALeadID) and EID=ALeadID };
+
+q_natural_join(cTitle, tDate) := 
+{ CTitle, TDate | (exists CID)
+	(trainingCourse(CID, CTitle, _, _) and
+	takes(_, CID, TDate) ) };
+
+q_division(eID) := 
+{ EID | employee(EID,  _, _, _, _) and
+	not (exists CID) (trainingCourse(CID, _, _, _)and not takes(EID, CID, _) ) };
+
+% Aggregation and grouping 
+
+drc_employeeMinSalary(eID, eLast, eFirst, eTitle, eSalary)  := 
+{ EID, ELast, EFirst, ETitle, ESalary | 
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	not (exists Salary)(employee(_, _, _, _, Salary) and Salary < ESalary) };
+
+drc_employeeTitleMinSalary(eID, eLast, eFirst, eTitle, eSalary)  :=
+{ EID, ELast, EFirst, ETitle, ESalary | 
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	not (exists Salary)(employee(_, _, _, ETitle, Salary) and Salary < ESalary) };
+
+drc_moreThanOneTechArea(eID, eLast, eFirst, eTitle, eSalary)  := 
+{ EID, ELast, EFirst, ETitle, ESalary | 
+	employee(EID, ELast, EFirst, ETitle, ESalary) and
+	(exists CID1, CID2, AID1, AID2)
+		(takes(EID, CID1, _) and trainingCourse(CID1, _, _, AID1) and
+		 takes(EID, CID2, _) and trainingCourse(CID2, _, _, AID2) and 
+		 AID1 <> AID2) };
+% 4.4 Safety 
+
+drc_safety(eID) := 
+{ EID | employee(EID, _, _, _, _) and not technologyArea(_, _, _, EID) };

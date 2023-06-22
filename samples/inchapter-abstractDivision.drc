@@ -1,0 +1,20 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Domain Relational Calculus
+%  Abstract Division Example
+%
+%  abTable(a,b)
+%       primary key (a, b)
+%  bTable(b)
+%       primary key (b)
+
+
+drc_universalDivision :=
+    { A | abTable(A, _) and (forall B) (not bTable(B) or abTable(A,B) ) }; 
+
+drc_forallExistsEquivalence :=
+{ A | abTable(A, _) and not (exists B) (not (not bTable(B) or abTable(A,B) ) )};
+
+drc_existentialDivision :=
+    { A | abTable(A, _) and not (exists B) (bTable(B) and not abTable(A,B)) };
+

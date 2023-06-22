@@ -1,0 +1,121 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Domain Relational Calculus By Name
+%   Practice Problems: New Home 
+
+% NEW HOME
+% homebuilder(hID, hName, hStreet, hCity, hZip, hPhone)	primary key: hID
+% model(hID, mID, mName, sqft, story)		primary key: hID, mID
+%     foreign key (hID) references homebuilder(hID)
+% subdivision(sName, sCity, sZip)		primary key: sName 
+% offered(sName, hID, mID, price)		primary key: sName, hID, mID
+%     foreign key (sName) references subdivision(sName),
+%     foreign key (hID, mID) references model(hID, mID) 
+% lot(sName, lotNum, lStAddr, lSize, lPremium)	primary key: sName, lotNum
+%     foreign key (sName) references subdivision(sName) 
+% sold(sName, lotNum, hID, mID, status)		primary key: sName, lotNum 
+%     foreign key (sName, hID, mID) references offered(sName, hID, mID),
+%     foreign key (sName, lotNum) references lot(sName, lotNum) 
+
+
+% 1	Are there subdivisions that only offer single-story homes?
+%	(sName, sCity, sZip)
+
+subdivisionsOfferSingle(sName: SName) <- (exists HID, MID) 
+       (offered(sName: SName, hID: HID, mID: MID) and
+	model(hID: HID, mID: MID, story: 1)) ;
+
+
+subdivisionsOfferOther(sName: SName) <- (exists HID, MID, Story) 
+       (offered(sName: SName, hID: HID, mID: MID) and
+	model(hID: HID, mID: MID, story: Story) and Story<>1) ;
+
+
+drc1(sName: SName, sCity: SCity, sZip: SZip)  <-
+	subdivision(sName: SName, sCity: SCity, sZip: SZip) and
+	subdivisionsOfferSingle(sName: SName) and
+	not subdivisionsOfferOther(sName: SName) ;
+
+
+% 2	List all the homebuilders who offer single-story models 
+%	with at least 2000 square feet in subdivisions located in "Tempe". 
+%	(hName, hPhone)
+
+drc2(hName: HName, hPhone: HPhone) <- (exists HID, MID, SName, Sqft)
+       (homebuilder(hID: HID, hName: HName, hPhone: HPhone) and
+	model(hID: HID, mID: MID, sqft: Sqft, story: 1) and Sqft > 2000 and
+	offered(sName: SName, hID: HID, mID: MID) and
+	subdivision(sName: SName, sCity: 'Tempe') ) ;
+
+ 
+% 3 	Which lots in the "Terraces" subdivision are available i.e. not sold? 
+%	(lotNum, lStAddr, lSize, lPremium)
+
+drc3(lotNum: LotNum, lStAddr: LStAddr, lSize: LSize, lPremium: LPremium) <-
+       lot(sName: 'Terraces', lotNum: LotNum, lStAddr: LStAddr, lSize: LSize, lPremium: LPremium) and
+	not sold(sName: 'Terraces', lotNum: LotNum) ;
+	
+
+ 
+% 4	Which models are not currently offered in any subdivision? 
+%	(hName, mName)
+
+drc4(hName: HName, mName: MName) <- (exists HID, MID)
+       (homebuilder(hID: HID, hName: HName) and
+	model(hID: HID, mID: MID, mName: MName) and
+	not offered(hID: HID, mID: MID) ) ;
+ 
+% 5	Which subdivisions offer models from more than one homebuilder?
+%	(sName, sCity, sZip)
+
+drc5(sName: SName, sCity: SCity, sZip: SZip) <-
+	subdivision(sName: SName, sCity: SCity, sZip: SZip) and
+	(exists HID1, HID2)
+	   (offered(sName: SName, hID: HID1) and
+	    offered(sName: SName, hID: HID2) and 
+	    HID1 <> HID2 ) ;
+
+ 
+% 6	Which models are offered in only one subdivision? 
+%	(hName, mName)
+
+drc6(hName: HName, mName: MName) <-  (exists HID, MID, SName) 
+       (homebuilder(hID: HID, hName: HName) and
+	model(hID: HID, mID: MID, mName: MName) and 
+	offered(sName: SName, hID: HID, mID: MID) and 
+	not (exists AnotherSName) 
+		(offered(sName: AnotherSName, hID: HID, mID: MID) and SName<>AnotherSName)) ;
+
+
+ 
+% 7	Which models offered in the "Foothills" subdivision 
+%	have the maximum square footage? 
+%	(hName, mName, sqft)
+
+foothillsModels(hID: HID, mID: MID, sqft: Sqft) <-	 
+        offered(sName: 'Foothills', hID: HID, mID: MID) and
+	model(hID: HID, mID: MID, sqft: Sqft) ;
+
+maxSqftFoothillsModels(hID: HID, mID: MID, sqft: Sqft) <-
+	foothillsModels(hID: HID, mID: MID, sqft: Sqft) and
+	not (exists S) (foothillsModels(sqft: S) and S > Sqft);
+
+drc7(hName: HName, mName: MName, sqft: Sqft) <-  (exists HID, MID)
+       (maxSqftFoothillsModels(hID: HID, mID: MID, sqft: Sqft) and
+	homebuilder(hID: HID, hName: HName) and
+	model(hID: HID, mID: MID, mName: MName, sqft: Sqft)) ;
+
+ 
+% 8	Which subdivision offers all the models by the homebuilder "Homer"? 
+%	(sName, sCity, sZip)
+
+drc8(sName: SName, sCity: SCity, sZip: SZip) <- (exists HomerHID)
+ (subdivision(sName: SName, sCity: SCity, sZip: SZip) and
+  homebuilder(hID: HomerHID, hName: 'Homer') and
+  offered(sName: SName, hID: HomerHID) and
+  not (exists MID)
+       (model(hID: HomerHID, mID: MID) and
+        not offered(sName: SName, hID: HomerHID, mID: MID)));
+      
+ 
+

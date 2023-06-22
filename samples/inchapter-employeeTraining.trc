@@ -1,0 +1,128 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Tuple Relational Calculus
+%  Queries in Chapter
+
+% EMPLOYEE TRAINING 
+% employee(eID, eLast, eFirst, eTitle, eSalary)      primary key: eID
+% technologyArea(aID, aTitle, aURL, aLeadID)      primary key: aID
+%    foreign key (aLeadID) references employee(eID)
+% trainingCourse(cID, cTitle, cHours, areaID)        primary key: cID
+%    foreign key (areaID) references technologyArea(aID) 
+% takes(eID, cID, tDate)                                           primary key: eID, cID
+%    foreign key (eID) references employee(eID)
+%    foreign key (cID) references trainingCourse(cID)
+
+% 4.2.1 Fundamental Query Expressions
+
+% Table 4.3: TRC Sample Filtering Queries
+
+trc_Managers :=
+{ E | employee(E) and E.eTitle = 'Manager' };
+
+trc_Titles :=
+{ E.eTitle | employee(E) };
+
+trc_SalariesLT60K :=
+{ E.eLast, E.eFirst, E.eSalary | employee(E) and E.eSalary < 60000 };
+
+%-------------------------------------------------------------------------------------
+
+trc_employeeLeads :=
+{ E, A | employee(E) and technologyArea(A) and E.eID = A.aLeadID };
+
+trc_CourseTitleOfferings :=
+{ C.cTitle, T.tDate | trainingCourse(C) and takes(T) and C.cID = T.cID };
+
+% 4.2.2 Quantification of Variables
+
+% Table 4.4 TRC Sample Set Queries --------------------------------------------
+
+trc_ManagerOrProjectLead :=
+{ E | employee(E) and (E.eTitle = 'Manager' or E.eTitle = 'Project Lead') };
+
+trc_ManagersNoCourses := 
+{ E | employee(E) and E.eTitle = 'Manager' and 
+	not (exists T) (takes(T) and T.eID = E.eID) };
+
+trc_ManagersTookCourses :=
+{ E | employee(E) and E.eTitle = 'Manager' and 
+	(exists T) (takes(T) and T.eID = E.eID) };
+
+%------------------------------------------------------------------------
+
+% Division 
+
+trc_divUniversal :=
+{ E.eID | employee(E) and (forall C) (not trainingCourse(C) or
+	(exists T) (takes(T) and T.eID=E.eID and T.cID=C.cID) ) };
+
+trc_divExistential :=
+{ E.eID | employee(E) and not (exists C) (trainingCourse(C) and
+	not (exists T) (takes(T) and T.eID = E.eID and T.cID = C.cID) ) };
+
+% 4.2.4 Relational Completeness
+
+% Table 4.8 TRC Summary of Fundamental Employee Training Queries
+
+q_select := 
+{ E | employee(E) and E.eSalary > 100000 };
+
+q_project :=
+{ E.eLast, E.eFirst, E.eTitle | employee(E) };
+
+managers := { E.eID | employee(E) and E.eTitle='Manager' };
+projectLeads := { E.eID | employee(E) and E.eTitle='Project Lead' };
+q_union := { T | managers(T) or projectLeads(T) };
+
+% managers := { E.eID | employee(E) and E.eTitle='Manager' };
+takenCourse := { T.eID | takes(T) };
+q_difference := { T | managers(T) and not takenCourse(T) };
+
+q_cartesian_product := 
+{ E.eID, C.cID | employee(E) and trainingCourse(C) };
+
+% -----------------------------------------------------------------------------------
+
+% Table 4.9 TRC Summary of Additional Employee Training Queries
+
+% managers := { E.eID | employee(E) and E.eTitle=‘Manager’ };
+% takenCourse := { T.eID | takes(T) };
+q_intersection := 
+{ T | managers(T) and takenCourse(T) };
+
+q_theta_join := 
+{ E, A | employee(E) and technologyArea(A) and E.eID=A.aLeadID };
+
+q_natural_join := 
+{ C.cTitle, T.tDate |
+	trainingCourse(C) and takes(T) and C.cID=T.cID };
+
+q_division := 
+{ E.eID | employee(E) and not (exists C) (trainingCourse(C) and
+	not (exists T) (takes(T) and T.eID = E.eID and T.cID = C.cID)) };
+
+% Aggregation and grouping 
+
+trc_employeeMinSalary := 
+{ E | employee(E) and 
+	not (exists EMP)(employee(EMP) and EMP.eSalary < E.eSalary) };
+
+trc_employeeTitleMinSalary :=
+{ E | employee(E) and
+	not (exists EMP)(employee(EMP) and EMP.eTitle = E.eTitle and EMP.eSalary < E.eSalary) };
+
+trc_moreThanOneTechArea := 
+{ E | employee(E) and (exists T1, C1, T2, C2)
+	(takes(T1) and T1.eID = E.eID and trainingCourse(C1) and T1.cID = C1.cID and
+	takes(T2) and T2.eID = E.eID and trainingCourse(C2) and T2.cID = C2.cID and
+	C1.areaID <> C2.areaID) };
+
+% 4.4 Safety 
+
+%trc_employeeLeads :=
+%{ E, A | employee(E) and technologyArea(A) and E.eID = A.aLeadID };
+
+trc_safety := 
+{ E.eID | employee(E) and not (exists L) (trc_employeeLeads(L) and L.eID=E.eID) };
+

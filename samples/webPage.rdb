@@ -1,0 +1,128 @@
+@webpage(wID/char,wTitle/char,wURL/char,hits/numeric):wID
+'W01','WinRDBI Educational Tool','https://winrdbi.asu.edu',100000
+'W02','WinRDBI Download','https://winrdbi.asu.edu/download.html',90000
+'W03','WinRDBI FAQs','https://winrdbi.asu.edu/faqs.html',75000
+'W04','WinRDBI Samples','https://winrdbi.asu.edu/samples.html',125000
+'W05','WinRDBI User Guide','https://winrdbi.asu.edu/UserGuide/UsersGuide.html',50000
+'W06','WinRDBI History','https://winrdbi.asu.edu/history.html',10000
+'W07','Author Website','https://winrdbi.asu.edu/author/index.html',100
+
+@site(sID/char,sTitle/char,sURL/char):sID
+'S01','Suzanne W. Dietrich','https://www.public.asu.edu/~dietrich/'
+'S02','Amzi!','http://www.amzi.com/'
+'S03','An Educational Tool for Formal Relational Query Languages','https://doi.org/10.1080/0899340930040201'
+'S04','WinRDBI: A Windows-based Relational Database Educational Tool','https://doi.org/10.1145/268085.268131'
+
+@graphic(gID/char,gName/char,gType/char,src/char,alt/char):gID
+'G01','understandingbook','jpg','images','Understanding Databases:Concepts and Practice'
+'G02','initial','png','images','WinRDBI Initial Screenshot'
+'G03','menu','png','images','WinRDBI Menu'
+'G04','toolbar','png','images','WinRDBI Toolbar'
+'G05','newQuery','gif','icons','WinRDBI Icon: New Query'
+'G06','newDatabase','gif','icons','WinRDBI Icon: New Database'
+'G07','schemaPane','jpg','images','WinRDBI Schema Pane'
+'G08','questionMark','gif','icons','Question Mark'
+'G09','exclamationMark','png','icons','Exclamation Mark'
+'G10','hotairballoon','jpg','images','Hot Air Balloon'
+'G11','asulogo','gif','icons','ASU Logo'
+
+@document(dID/char,dName/char,dType/char,dDescription/char,dDate/char,downloads/numeric,wID/char):dID
+'D01','emptraining','accdb','Employee Training Access Database','2020-08-01',500,'W07'
+'D02','WinRDBI2020-windows','zip','Zip file of WinRDBI 2020','2020-08-01',110000,'W02'
+'D03','WinRDBI','ppt','WinRDBI Powerpoint Presentation','2010-12-28',333,'W07'
+'D10','emptraining','rdb','Employee Training Data - RDB','2020-12-28',1010,'W04'
+'D11','emptraining','xml','Employee Training Data - XML','2020-12-28',1111,'W04'
+'D12','emptraining','alg','Employee Training Queries - ALG','2020-12-28',1212,'W04'
+'D13','emptraining','drc','Employee Training Queries - DRC','2020-12-28',1313,'W04'
+'D14','emptraining','dbn','Employee Training Queries - DBN','2020-12-28',1414,'W04'
+'D15','emptraining','trc','Employee Training Queries - TRC','2020-12-28',1515,'W04'
+'D16','emptraining','sql','Employee Training Queries - SQL','2020-12-28',1616,'W04'
+'D20','webpage','rdb','Web Page Data - RDB','2020-12-28',1020,'W04'
+'D21','webpage','xml','Web Page Data - XML','2020-12-28',1121,'W04'
+'D22','webpage','alg','Web Page Queries - ALG','2020-12-28',1222,'W04'
+'D23','webpage','drc','Web Page Queries - DRC','2020-12-28',1323,'W04'
+'D24','webpage','dbn','Web Page Queries - DBN','2020-12-28',1424,'W04'
+'D25','webpage','trc','Web Page Queries - TRC','2020-12-28',1525,'W04'
+'D26','webpage','sql','Web Page Queries - SQL','2020-12-28',1626,'W04'
+'D30','invest','rdb','Investment Portfolio Data - RDB','2020-12-28',1030,'W04'
+'D31','invest','xml','Investment Portfolio Data - XML','2020-12-28',1131,'W04'
+'D32','invest','alg','Investment Portfolio Queries - ALG','2020-12-28',1232,'W04'
+'D33','invest','drc','Investment Portfolio Queries - DRC','2020-12-28',1333,'W04'
+'D34','invest','dbn','Investment Portfolio Queries - DBN','2020-12-28',1434,'W04'
+'D35','invest','trc','Investment Portfolio Queries - TRC','2020-12-28',1535,'W04'
+'D36','invest','sql','Investment Portfolio Queries - SQL','2020-12-28',1636,'W04'
+'D40','newhome','rdb','New Home Data - RDB','2020-12-28',1040,'W04'
+'D41','newhome','xml','New Home Data - XML','2020-12-28',1141,'W04'
+'D42','newhome','alg','New Home Queries - ALG','2020-12-28',1242,'W04'
+'D43','newhome','drc','New Home Queries - DRC','2020-12-28',1343,'W04'
+'D44','newhome','dbn','New Home Queries - DBN','2020-12-28',1444,'W04'
+'D45','newhome','trc','New Home Queries - TRC','2020-12-28',1545,'W04'
+'D46','newhome','sql','New Home Queries - SQL','2020-12-28',1646,'W04'
+
+@internal(sourceID/char,targetID/char):sourceID, targetID
+'W01','W01'
+'W02','W01'
+'W03','W01'
+'W04','W01'
+'W05','W01'
+'W06','W01'
+'W01','W02'
+'W02','W02'
+'W03','W02'
+'W04','W02'
+'W05','W02'
+'W06','W02'
+'W01','W03'
+'W02','W03'
+'W03','W03'
+'W04','W03'
+'W05','W03'
+'W06','W03'
+'W01','W04'
+'W02','W04'
+'W03','W04'
+'W04','W04'
+'W05','W04'
+'W06','W04'
+'W01','W05'
+'W02','W05'
+'W03','W05'
+'W04','W05'
+'W05','W05'
+'W06','W05'
+'W01','W06'
+'W02','W06'
+'W03','W06'
+'W04','W06'
+'W05','W06'
+'W06','W06'
+'W01','W07'
+'W02','W07'
+'W03','W07'
+'W04','W07'
+'W05','W07'
+'W06','W07'
+'W07','W01'
+'W07','W04'
+
+@external(wID/char,sID/char,followed/numeric):wID, sID
+'W01','S01',11
+'W01','S02',12
+'W07','S01',71
+'W06','S03',30
+'W06','S04',551
+
+@displays(wID/char,gID/char):wID, gID
+'W01','G01'
+'W07','G01'
+'W05','G02'
+'W05','G03'
+'W05','G04'
+'W05','G05'
+'W05','G06'
+'W05','G07'
+'W03','G08'
+'W03','G09'
+'W01','G10'
+'W05','G11'
+

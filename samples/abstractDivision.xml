@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE database [
+<!ELEMENT database (abTable,bTable)>
+	<!ATTLIST database URL CDATA #REQUIRED>
+	<!ELEMENT abTable (abTable_rec)*>
+		<!ATTLIST abTable KEY CDATA #FIXED "a, b" >
+		<!ELEMENT abTable_rec (a,b)>
+			<!ELEMENT a (#PCDATA)>
+				<!ATTLIST a 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "a">
+			<!ELEMENT b (#PCDATA)>
+				<!ATTLIST b 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "b">
+	<!ELEMENT bTable (bTable_rec)*>
+		<!ATTLIST bTable KEY CDATA #FIXED "b" >
+		<!ELEMENT bTable_rec (b)>
+			<!ELEMENT b (#PCDATA)>
+				<!ATTLIST b 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "b">
+]>
+<database URL="D:\BookDBWiley\UnderstandingDBConceptsPractice\SupportingMaterial\abstractDivision\abstractDivision.xml">
+    <abTable>
+        <abTable_rec>
+            <a><![CDATA[a1]]></a>
+            <b><![CDATA[b1]]></b>
+        </abTable_rec>
+        <abTable_rec>
+            <a><![CDATA[a1]]></a>
+            <b><![CDATA[b2]]></b>
+        </abTable_rec>
+        <abTable_rec>
+            <a><![CDATA[a2]]></a>
+            <b><![CDATA[b2]]></b>
+        </abTable_rec>
+        <abTable_rec>
+            <a><![CDATA[a3]]></a>
+            <b><![CDATA[b1]]></b>
+        </abTable_rec>
+        <abTable_rec>
+            <a><![CDATA[a3]]></a>
+            <b><![CDATA[b2]]></b>
+        </abTable_rec>
+        <abTable_rec>
+            <a><![CDATA[a3]]></a>
+            <b><![CDATA[b3]]></b>
+        </abTable_rec>
+    </abTable>
+    <bTable>
+        <bTable_rec>
+            <b><![CDATA[b1]]></b>
+        </bTable_rec>
+        <bTable_rec>
+            <b><![CDATA[b2]]></b>
+        </bTable_rec>
+    </bTable>
+</database>

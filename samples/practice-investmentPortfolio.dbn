@@ -1,0 +1,120 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Domain Relational Calculus By Name
+%  Practice Problems: Investment Portfolio
+
+% INVESTMENT PORTFOLIO
+% client(taxPayerID, name, address)				primary key: taxPayerID
+% stock(sTicker, sName, rating, prinBus, sHigh, sLow, sCurrent, ret1Yr, ret5Yr)		primary key: sTicker
+% fundFamily(familyID, company, cAddress)				primary key: familyID
+% mutualFund(mTicker, mName, prinObj, mHigh, mLow, mCurrent, yield, familyID)	primary key: mTicker
+%   foreign key (familyID) references fundFamily(familyID)
+% mutualFundPortfolio(taxPayerID, mTicker, mNumShares)			primary key: taxPayerID, mTicker
+%    foreign key (taxPayerID) references client(taxPayerID)
+%    foreign key (mTicker) references mutualFund(mTicker)
+% stockPortfolio(taxPayerID, sTicker, sNumShares)			primary key: taxPayerID, sTicker
+%    foreign key (taxPayerID) references client(taxPayerID)
+%    foreign key (sTicker) references stock(sTicker)
+
+
+% 1	What clients have invested in which 'A' rated stocks? 
+%	(taxPayerID, name, sTicker, sName) 
+
+dbn1(taxPayerID: TaxPayerID, name: Name, sTicker: STicker, sName: SName) <-
+	client(taxPayerID: TaxPayerID, name: Name) and
+	stockPortfolio(taxPayerID: TaxPayerID, sTicker: STicker) and
+	stock(sTicker: STicker, sName: SName, rating: 'A');
+
+
+% 2	Which clients have invested in both stocks whose principal business is 
+%	'Technology' and mutual funds having growth ('G') as a principal objective?
+%	(taxPayerID, name)
+
+dbn2(taxPayerID: TaxPayerID, name: Name) <-
+	(exists STicker, MTicker)
+      	 (client(taxPayerID: TaxPayerID, name: Name) and
+	stockPortfolio(taxPayerID: TaxPayerID, sTicker: STicker) and
+	stock(sTicker: STicker, prinBus: 'Technology') and
+	mutualFundPortfolio(taxPayerID: TaxPayerID, mTicker: MTicker) and
+	mutualFund(mTicker: MTicker, prinObj: 'G'));
+
+% 3 	What clients have not invested in mutual funds with income ('I') 
+%	as a principal objective? 
+%	(taxPayerID, name) 
+
+dbn3(taxPayerID: TaxPayerID, name: Name) <-
+	client(taxPayerID: TaxPayerID, name: Name) and
+	not (exists MTicker)
+		(mutualFundPortfolio(taxPayerID: TaxPayerID, mTicker: MTicker) and
+		 mutualFund(mTicker: MTicker, prinObj: 'I'));
+
+
+% 4	Which clients have invested in stocks but not in mutual funds? 
+%	(taxPayerID, name) 
+
+dbn4(taxPayerID: TaxPayerID, name: Name) <-
+	client(taxPayerID: TaxPayerID, name: Name) and
+	(exists STicker)
+		(stockPortfolio(taxPayerID: TaxPayerID, sTicker: STicker) and
+		 stock(sTicker: STicker))
+	and not (exists MTicker)
+		(mutualFundPortfolio(taxPayerID: TaxPayerID, mTicker: MTicker) and
+		 mutualFund(mTicker: MTicker));
+
+
+% 5	Which clients have more than one no-rating ('NR') stock? 
+%	(taxPayerID, name)
+
+investNR(taxPayerID: TaxPayerID, sTicker: STicker) <-
+	client(taxPayerID: TaxPayerID) and
+	stockPortfolio(taxPayerID: TaxPayerID, sTicker: STicker) and
+	stock(sTicker: STicker, rating: 'NR');
+
+dbn5(taxPayerID: TaxPayerID, name: Name) <-
+	client(taxPayerID: TaxPayerID, name: Name) and
+	(exists STicker1, STicker2)
+		(investNR(taxPayerID: TaxPayerID, sTicker: STicker1) and
+		 investNR(taxPayerID: TaxPayerID, sTicker: STicker2) and
+		 STicker1 <> STicker2);
+
+
+% 6	Which clients have invested in only one mutual fund with stability ('S')  as a principal objective?
+%	(taxPayerID, name)
+
+investS(taxPayerID: TaxPayerID, mTicker: MTicker) <-
+        	mutualFund(mTicker: MTicker, prinObj: 'S') and
+	mutualFundPortfolio(taxPayerID: TaxPayerID, mTicker: MTicker);
+
+dbn6(taxPayerID: TaxPayerID, name: Name) <-
+	 (exists MTicker)
+      	 (client(taxPayerID: TaxPayerID, name: Name) and
+	investS(taxPayerID: TaxPayerID, mTicker: MTicker) and
+	not (exists M)
+		(investS(taxPayerID: TaxPayerID, mTicker: M) and M<>MTicker));
+
+
+% 7	Which mutual funds have the minimum current rate? 
+%	(mTicker, mName, mCurrent) 
+
+dbn7(mTicker: MTicker, mName: MName, mCurrent: MCurrent) <-
+	mutualFund(mTicker: MTicker, mName: MName, mCurrent: MCurrent) and
+	not (exists C) (mutualFund(mCurrent: C) and C < MCurrent);
+
+
+% 8	What clients have invested in all of the mutual funds within the 
+%	'Fictitious' fund family? 
+%	(taxPayerID, name) 
+
+fictitiousFunds(mTicker: MTicker) <- 
+	(exists FID)
+       	(mutualFund(mTicker: MTicker, familyID: FID) and
+	fundFamily(familyID: FID, company: 'Fictitious'));
+
+dbn8(taxPayerID: TaxPayerID, name: Name) <-
+	client(taxPayerID: TaxPayerID, name: Name) and
+	not (exists MTicker)
+		(fictitiousFunds(mTicker: MTicker) and
+		 not mutualFundPortfolio(taxPayerID: TaxPayerID, mTicker: MTicker));
+
+
+

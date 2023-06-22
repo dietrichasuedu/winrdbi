@@ -1,0 +1,19 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 5 SQL: An Introduction to Querying - DRC By Name (More to Explore)
+%  Abstract Division Example
+%
+%  abTable(a,b)
+%       primary key (a, b)
+%  bTable(b)
+%       primary key (b)
+
+
+universalDivision(a: A) <- abTable(a:A) and (forall B) (not bTable(b:B) or abTable(b: B,a: A)); 
+
+forallExistsEquivalence(a: A ) <- abTable(a:A) and not (exists B) (not (not bTable(b:B) or abTable(a:A,b:B)));
+
+existentialDivision(a: A) <- abTable(a:A)  and not (exists B) (bTable(b:B) and not abTable(a:A,b:B));
+
+
+

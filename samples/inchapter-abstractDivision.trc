@@ -1,0 +1,23 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Tuple Relational Calculus
+%  Abstract Division Example
+%
+%  abTable(a,b)
+%       primary key (a, b)
+%  bTable(b)
+%       primary key (b)
+
+
+trc_universalDivision :=
+    { T.a | abTable(T) and (forall B) (not bTable(B) or  
+	(exists AB) (abTable(AB) and AB.a=T.a and AB.b=B.b)) };
+
+trc_forallExistsEquivalence :=
+  { T.a | abTable(T) and not (exists B)( not (not bTable(B) or  
+            (exists AB) (abTable(AB) and AB.a=T.a and AB.b=B.b) ) )};
+
+trc_existentialDivision :=
+    { T.a | abTable(T) and not (exists B) (bTable(B) and  
+	not (exists AB) (abTable(AB) and AB.a=T.a and AB.b=B.b) ) };
+ 

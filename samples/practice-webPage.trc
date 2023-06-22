@@ -1,0 +1,116 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Tuple Relational Calculus
+% Practice Problems: Web Page
+
+% WEB PAGE 
+% webpage (wID, wTitle, wURL, hits)			    primary key: wID
+% site (sID, sTitle, sURL)				    primary key: sID
+% graphic (gID, gName, gType, src, alt)			    primary key: gID
+% document (dID, dName, dType, dDescription, dDate, downloads, wID)    	    primary key: dID
+%     foreign key (wID) references webpage(wID)
+% internal (sourceID, targetID)			    	    primary key: sourceID, targetID
+%     foreign key (sourceID) references webpage(wID)
+%     foreign key (sourceID) references webpage(wID)
+% external (wID, sID, followed)			    	    primary key: wID, sID
+%     foreign key (wID) references webpage(wID) 
+%     foreign key (sID) references site(sID)
+% displays (wID, gID)				    primary key: wID, gID
+%     foreign key (wID) references webpage(wID) 
+%     foreign key (gID) references graphic(gID) 
+
+
+% 1 Which pages contain a link to SQL ('sql') documents?
+%    (wID, wTitle)
+
+trc1 :=
+{ W.wID, W.wTitle | (exists D)
+	(document(D) and D.dType = 'sql' and
+	 webpage(W) and W.wID = D.wID ) };
+
+ 
+% 2 Which pages display graphics having the name 'understandingbook'?
+%    (wID, wTitle)
+
+trc2 :=
+{ W.wID, W.wTitle | (exists G,D)
+	(graphic(G) and G.gName = 'understandingbook' and
+       	 displays(D) and D.gID = G.gID and
+	 webpage(W) and W.wID = D.wID) };
+
+ 
+% 3 	Which pages do not display any graphics?
+%	(wID, wTitle)
+
+trc3 :=
+{ W.wID, W.wTitle | 
+	webpage(W) and 
+	not (exists D) (displays(D) and D.wID = W.wID) };
+
+ 
+% 4	Which pages display 'jpg' graphics but not 'gif' graphics?
+%	(wID, wTitle)
+
+jpgPages := 
+{ D.wID | displays(D) and (exists G) 
+               (graphic(G) and G.gType = 'jpg' and G.gID = D.gID) };
+
+gifPages := 
+{ D.wID | displays(D) and (exists G) 
+               (graphic(G) and G.gType = 'gif' and G.gID = D.gID) };
+
+trc4 :=
+{ W.wID, W.wTitle | 
+	webpage(W) and
+	(exists J) (jpgPages(J) and J.wID = W.wID) and
+	not (exists G) (gifPages(G) and G.wID = W.wID) };
+
+ 
+% 5 Which pages contain more than one document?
+%    (wID, wTitle)
+
+trc5 := 
+{ W.wID, W.wTitle | 
+	webpage (W) and 
+	(exists D1)(document(D1) and D1.wID = W.wID and
+	(exists D2)(document(D2) and D2.wID = W.wID and D1.dID <> D2.dID)) };
+
+ 
+% 6 Which pages contain only one link to an external web page?
+%    (wID, wTitle)	
+
+trc6 := 
+{ W.wID, W.wTitle | 
+	webpage (W) and 
+	(exists E1)(external(E1) and E1.wID = W.wID and
+	not (exists E2) 
+	      (external(E2) and E2.wID = W.wID and E2.sID <> E1.sID) ) };
+		
+ 
+% 7	Which pages have the most hits?
+%	(wID, wTitle, hits)
+
+trc7 := 
+{ W.wID, W.wTitle, W.hits | 
+	webpage(W) and
+	not (exists P)(webpage(P) and W.hits < P.hits) };
+
+ 
+% 8 Which pages display graphics of all graphic types currently stored in the database? 
+%    (wID, wTitle)
+
+graphicType := 
+{G.gType | graphic(G)};
+
+displaysGraphicType := 
+{D.wID, G.gType | displays(D) and graphic(G) and D.gID = G.gID};
+
+trc8 := 
+{ W.wID, W.wTitle | 
+    webpage(W) and 
+     not (exists T)(graphicType(T) and 
+          not (exists G)(displaysGraphicType(G) and G.wID = W.wID and G.gType = T.gType)) };
+
+ 
+
+

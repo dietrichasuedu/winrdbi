@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE database [
+<!ELEMENT database (homebuilder,subdivision,lot,model,offered,sold)>
+	<!ATTLIST database URL CDATA #REQUIRED>
+	<!ELEMENT homebuilder (homebuilder_rec)*>
+		<!ATTLIST homebuilder KEY CDATA #FIXED "hID" >
+		<!ELEMENT homebuilder_rec (hID,hName,hStreet,hCity,hZip,hPhone)>
+			<!ELEMENT hID (#PCDATA)>
+				<!ATTLIST hID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hID">
+			<!ELEMENT hName (#PCDATA)>
+				<!ATTLIST hName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hName">
+			<!ELEMENT hStreet (#PCDATA)>
+				<!ATTLIST hStreet 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hStreet">
+			<!ELEMENT hCity (#PCDATA)>
+				<!ATTLIST hCity 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hCity">
+			<!ELEMENT hZip (#PCDATA)>
+				<!ATTLIST hZip 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hZip">
+			<!ELEMENT hPhone (#PCDATA)>
+				<!ATTLIST hPhone 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hPhone">
+	<!ELEMENT subdivision (subdivision_rec)*>
+		<!ATTLIST subdivision KEY CDATA #FIXED "sName" >
+		<!ELEMENT subdivision_rec (sName,sCity,sZip)>
+			<!ELEMENT sName (#PCDATA)>
+				<!ATTLIST sName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sName">
+			<!ELEMENT sCity (#PCDATA)>
+				<!ATTLIST sCity 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sCity">
+			<!ELEMENT sZip (#PCDATA)>
+				<!ATTLIST sZip 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sZip">
+	<!ELEMENT lot (lot_rec)*>
+		<!ATTLIST lot KEY CDATA #FIXED "sName, lotNum" >
+		<!ELEMENT lot_rec (sName,lotNum,lStAddr,lSize,lPremium)>
+			<!ELEMENT sName (#PCDATA)>
+				<!ATTLIST sName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sName">
+			<!ELEMENT lotNum (#PCDATA)>
+				<!ATTLIST lotNum 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "lotNum">
+			<!ELEMENT lStAddr (#PCDATA)>
+				<!ATTLIST lStAddr 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "lStAddr">
+			<!ELEMENT lSize (#PCDATA)>
+				<!ATTLIST lSize 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "lSize">
+			<!ELEMENT lPremium (#PCDATA)>
+				<!ATTLIST lPremium 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "lPremium">
+	<!ELEMENT model (model_rec)*>
+		<!ATTLIST model KEY CDATA #FIXED "mID, hID" >
+		<!ELEMENT model_rec (hID,mID,mName,sqft,story)>
+			<!ELEMENT hID (#PCDATA)>
+				<!ATTLIST hID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hID">
+			<!ELEMENT mID (#PCDATA)>
+				<!ATTLIST mID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mID">
+			<!ELEMENT mName (#PCDATA)>
+				<!ATTLIST mName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mName">
+			<!ELEMENT sqft (#PCDATA)>
+				<!ATTLIST sqft 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "sqft">
+			<!ELEMENT story (#PCDATA)>
+				<!ATTLIST story 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "story">
+	<!ELEMENT offered (offered_rec)*>
+		<!ATTLIST offered KEY CDATA #FIXED "sName, hID, mID" >
+		<!ELEMENT offered_rec (sName,hID,mID,price)>
+			<!ELEMENT sName (#PCDATA)>
+				<!ATTLIST sName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sName">
+			<!ELEMENT hID (#PCDATA)>
+				<!ATTLIST hID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hID">
+			<!ELEMENT mID (#PCDATA)>
+				<!ATTLIST mID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mID">
+			<!ELEMENT price (#PCDATA)>
+				<!ATTLIST price 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "price">
+	<!ELEMENT sold (sold_rec)*>
+		<!ATTLIST sold KEY CDATA #FIXED "sName, lotNum" >
+		<!ELEMENT sold_rec (sName,lotNum,hID,mID,status)>
+			<!ELEMENT sName (#PCDATA)>
+				<!ATTLIST sName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sName">
+			<!ELEMENT lotNum (#PCDATA)>
+				<!ATTLIST lotNum 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "lotNum">
+			<!ELEMENT hID (#PCDATA)>
+				<!ATTLIST hID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "hID">
+			<!ELEMENT mID (#PCDATA)>
+				<!ATTLIST mID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mID">
+			<!ELEMENT status (#PCDATA)>
+				<!ATTLIST status 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "status">
+]>
+<database URL="D:\BookDBWiley\UnderstandingDBConceptsPractice\SupportingMaterial\WinRDBIdata\newHome.xml">
+    <homebuilder>
+        <homebuilder_rec>
+            <hID><![CDATA[H01]]></hID>
+            <hName><![CDATA[Homer]]></hName>
+            <hStreet><![CDATA[1000 E.Mohawk]]></hStreet>
+            <hCity><![CDATA[Phoenix]]></hCity>
+            <hZip><![CDATA[82345]]></hZip>
+            <hPhone><![CDATA[602-111-2123]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H02]]></hID>
+            <hName><![CDATA[HBuilder2]]></hName>
+            <hStreet><![CDATA[300 E.Mitchell]]></hStreet>
+            <hCity><![CDATA[Phoenix]]></hCity>
+            <hZip><![CDATA[82345]]></hZip>
+            <hPhone><![CDATA[602-222-3453]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H03]]></hID>
+            <hName><![CDATA[HBuilder3]]></hName>
+            <hStreet><![CDATA[500 E.Rising Sun]]></hStreet>
+            <hCity><![CDATA[Glendale]]></hCity>
+            <hZip><![CDATA[72345]]></hZip>
+            <hPhone><![CDATA[623-333-2123]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H04]]></hID>
+            <hName><![CDATA[HBuilder4]]></hName>
+            <hStreet><![CDATA[700 E.Apache]]></hStreet>
+            <hCity><![CDATA[Tempe]]></hCity>
+            <hZip><![CDATA[82545]]></hZip>
+            <hPhone><![CDATA[480-444-3453]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H05]]></hID>
+            <hName><![CDATA[HBuilder5]]></hName>
+            <hStreet><![CDATA[W.Southern]]></hStreet>
+            <hCity><![CDATA[Tempe]]></hCity>
+            <hZip><![CDATA[82545]]></hZip>
+            <hPhone><![CDATA[480-555-2124]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H06]]></hID>
+            <hName><![CDATA[HBuilder6]]></hName>
+            <hStreet><![CDATA[1025 E.Lansing Rd.]]></hStreet>
+            <hCity><![CDATA[Phoenix]]></hCity>
+            <hZip><![CDATA[76890]]></hZip>
+            <hPhone><![CDATA[602-666-3421]]></hPhone>
+        </homebuilder_rec>
+        <homebuilder_rec>
+            <hID><![CDATA[H07]]></hID>
+            <hName><![CDATA[HBuilder7]]></hName>
+            <hStreet><![CDATA[965 Dorsey Rd.]]></hStreet>
+            <hCity><![CDATA[Tempe]]></hCity>
+            <hZip><![CDATA[82545]]></hZip>
+            <hPhone><![CDATA[480-777-2124]]></hPhone>
+        </homebuilder_rec>
+    </homebuilder>
+    <subdivision>
+        <subdivision_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <sCity><![CDATA[Tempe]]></sCity>
+            <sZip><![CDATA[85281]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <sCity><![CDATA[Phoenix]]></sCity>
+            <sZip><![CDATA[75281]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <sCity><![CDATA[Glendale]]></sCity>
+            <sZip><![CDATA[86281]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Seaside]]></sName>
+            <sCity><![CDATA[Tempe]]></sCity>
+            <sZip><![CDATA[85282]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Lagoonside]]></sName>
+            <sCity><![CDATA[Phoenix]]></sCity>
+            <sZip><![CDATA[75282]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Waterside]]></sName>
+            <sCity><![CDATA[Tempe]]></sCity>
+            <sZip><![CDATA[85281]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Mountainview]]></sName>
+            <sCity><![CDATA[Phoenix]]></sCity>
+            <sZip><![CDATA[85613]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <sCity><![CDATA[Glendale]]></sCity>
+            <sZip><![CDATA[89281]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Goldwater]]></sName>
+            <sCity><![CDATA[Tempe]]></sCity>
+            <sZip><![CDATA[89251]]></sZip>
+        </subdivision_rec>
+        <subdivision_rec>
+            <sName><![CDATA[Whitewater]]></sName>
+            <sCity><![CDATA[Phoenix]]></sCity>
+            <sZip><![CDATA[79281]]></sZip>
+        </subdivision_rec>
+    </subdivision>
+    <lot>
+        <lot_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[920 S. Main Street]]></lStAddr>
+            <lSize><![CDATA[9000]]></lSize>
+            <lPremium><![CDATA[1500]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <lotNum><![CDATA[2]]></lotNum>
+            <lStAddr><![CDATA[930 W. Keating Av]]></lStAddr>
+            <lSize><![CDATA[7000]]></lSize>
+            <lPremium><![CDATA[1600]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <lotNum><![CDATA[3]]></lotNum>
+            <lStAddr><![CDATA[92 W. Southern Av]]></lStAddr>
+            <lSize><![CDATA[6500]]></lSize>
+            <lPremium><![CDATA[1800]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Goldwater]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[930 W.University Dr]]></lStAddr>
+            <lSize><![CDATA[6000]]></lSize>
+            <lPremium><![CDATA[1800]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[930 E.Keating Av]]></lStAddr>
+            <lSize><![CDATA[7500]]></lSize>
+            <lPremium><![CDATA[2000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <lotNum><![CDATA[2]]></lotNum>
+            <lStAddr><![CDATA[1000 E.University Dr]]></lStAddr>
+            <lSize><![CDATA[21780]]></lSize>
+            <lPremium><![CDATA[1700]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Lagoonside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[500 W. Apache Blvd]]></lStAddr>
+            <lSize><![CDATA[21000]]></lSize>
+            <lPremium><![CDATA[2000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Mountainview]]></sName>
+            <lotNum><![CDATA[2]]></lotNum>
+            <lStAddr><![CDATA[1004 University Dr]]></lStAddr>
+            <lSize><![CDATA[8000]]></lSize>
+            <lPremium><![CDATA[1600]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[1031 E.Lemon St]]></lStAddr>
+            <lSize><![CDATA[7500]]></lSize>
+            <lPremium><![CDATA[1900]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Seaside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[1000 Alameda Rd]]></lStAddr>
+            <lSize><![CDATA[5500]]></lSize>
+            <lPremium><![CDATA[2500]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[W. Camelback]]></lStAddr>
+            <lSize><![CDATA[5000]]></lSize>
+            <lPremium><![CDATA[2000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[2]]></lotNum>
+            <lStAddr><![CDATA[E. Camelback]]></lStAddr>
+            <lSize><![CDATA[6500]]></lSize>
+            <lPremium><![CDATA[1000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[3]]></lotNum>
+            <lStAddr><![CDATA[920 E. Grand Av]]></lStAddr>
+            <lSize><![CDATA[7000]]></lSize>
+            <lPremium><![CDATA[1700]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[4]]></lotNum>
+            <lStAddr><![CDATA[520 E. Keating Av]]></lStAddr>
+            <lSize><![CDATA[6000]]></lSize>
+            <lPremium><![CDATA[1700]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[5]]></lotNum>
+            <lStAddr><![CDATA[1900 Broadway Rd]]></lStAddr>
+            <lSize><![CDATA[21000]]></lSize>
+            <lPremium><![CDATA[1700]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[6]]></lotNum>
+            <lStAddr><![CDATA[510 E. Camelback]]></lStAddr>
+            <lSize><![CDATA[6000]]></lSize>
+            <lPremium><![CDATA[1900]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[7]]></lotNum>
+            <lStAddr><![CDATA[900 E. Lemon St]]></lStAddr>
+            <lSize><![CDATA[7000]]></lSize>
+            <lPremium><![CDATA[4000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[8]]></lotNum>
+            <lStAddr><![CDATA[1000 E. Apache]]></lStAddr>
+            <lSize><![CDATA[7000]]></lSize>
+            <lPremium><![CDATA[3000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Waterside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[200 Broadway Rd]]></lStAddr>
+            <lSize><![CDATA[5500]]></lSize>
+            <lPremium><![CDATA[2000]]></lPremium>
+        </lot_rec>
+        <lot_rec>
+            <sName><![CDATA[Whitewater]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <lStAddr><![CDATA[9000 Scottsdale Rd]]></lStAddr>
+            <lSize><![CDATA[6200]]></lSize>
+            <lPremium><![CDATA[1900]]></lPremium>
+        </lot_rec>
+    </lot>
+    <model>
+        <model_rec>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Santa Fe]]></mName>
+            <sqft><![CDATA[3000]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <mName><![CDATA[Aurien]]></mName>
+            <sqft><![CDATA[2500]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <mName><![CDATA[Mansion]]></mName>
+            <sqft><![CDATA[4000]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H02]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Condo]]></mName>
+            <sqft><![CDATA[3000]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Stonewell]]></mName>
+            <sqft><![CDATA[5000]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <mName><![CDATA[Shalimar]]></mName>
+            <sqft><![CDATA[1500]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[04]]></mID>
+            <mName><![CDATA[Aurien I]]></mName>
+            <sqft><![CDATA[2000]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <mName><![CDATA[Aurien II]]></mName>
+            <sqft><![CDATA[4000]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H05]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Grandeur]]></mName>
+            <sqft><![CDATA[2005]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H05]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <mName><![CDATA[Rockwell]]></mName>
+            <sqft><![CDATA[2005]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Brickwell]]></mName>
+            <sqft><![CDATA[4000]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <mName><![CDATA[Pebblewell]]></mName>
+            <sqft><![CDATA[1900]]></sqft>
+            <story><![CDATA[1]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <mName><![CDATA[Dustwell]]></mName>
+            <sqft><![CDATA[2000]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+        <model_rec>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <mName><![CDATA[Vacuumwell]]></mName>
+            <sqft><![CDATA[2500]]></sqft>
+            <story><![CDATA[2]]></story>
+        </model_rec>
+    </model>
+    <offered>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[100000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[150000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[110000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[50000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[200500]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[50000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Lagoonside]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[04]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[04]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[50000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[100000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[175000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[04]]></mID>
+            <price><![CDATA[100000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H05]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[500000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Lagoonside]]></sName>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[300000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Seaside]]></sName>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[250000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[20000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Goldwater]]></sName>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[150000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[50000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Whitewater]]></sName>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[700000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[300000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[400000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[500000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <price><![CDATA[600000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[300000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Waterside]]></sName>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H02]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[200000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[300000]]></price>
+        </offered_rec>
+        <offered_rec>
+            <sName><![CDATA[Hillview]]></sName>
+            <hID><![CDATA[H07]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <price><![CDATA[700000]]></price>
+        </offered_rec>
+    </offered>
+    <sold>
+        <sold_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[P]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[2]]></lotNum>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <status><![CDATA[P]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[3]]></lotNum>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[C]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[4]]></lotNum>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <status><![CDATA[C]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Terraces]]></sName>
+            <lotNum><![CDATA[5]]></lotNum>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[P]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Foothills]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H01]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[P]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Oceanside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H03]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[C]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Lagoonside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[01]]></mID>
+            <status><![CDATA[C]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Seaside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H06]]></hID>
+            <mID><![CDATA[02]]></mID>
+            <status><![CDATA[P]]></status>
+        </sold_rec>
+        <sold_rec>
+            <sName><![CDATA[Waterside]]></sName>
+            <lotNum><![CDATA[1]]></lotNum>
+            <hID><![CDATA[H04]]></hID>
+            <mID><![CDATA[03]]></mID>
+            <status><![CDATA[C]]></status>
+        </sold_rec>
+    </sold>
+</database>

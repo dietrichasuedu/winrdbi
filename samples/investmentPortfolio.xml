@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE database [
+<!ELEMENT database (client,stock,fundFamily,mutualFund,mutualFundPortfolio,stockPortfolio)>
+	<!ATTLIST database URL CDATA #REQUIRED>
+	<!ELEMENT client (client_rec)*>
+		<!ATTLIST client KEY CDATA #FIXED "taxPayerID" >
+		<!ELEMENT client_rec (taxPayerID,name,address)>
+			<!ELEMENT taxPayerID (#PCDATA)>
+				<!ATTLIST taxPayerID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "taxPayerID">
+			<!ELEMENT name (#PCDATA)>
+				<!ATTLIST name 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "name">
+			<!ELEMENT address (#PCDATA)>
+				<!ATTLIST address 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "address">
+	<!ELEMENT stock (stock_rec)*>
+		<!ATTLIST stock KEY CDATA #FIXED "sTicker" >
+		<!ELEMENT stock_rec (sTicker,sName,rating,prinBus,sHigh,sLow,sCurrent,ret1Yr,ret5Yr)>
+			<!ELEMENT sTicker (#PCDATA)>
+				<!ATTLIST sTicker 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sTicker">
+			<!ELEMENT sName (#PCDATA)>
+				<!ATTLIST sName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sName">
+			<!ELEMENT rating (#PCDATA)>
+				<!ATTLIST rating 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "rating">
+			<!ELEMENT prinBus (#PCDATA)>
+				<!ATTLIST prinBus 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "prinBus">
+			<!ELEMENT sHigh (#PCDATA)>
+				<!ATTLIST sHigh 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "sHigh">
+			<!ELEMENT sLow (#PCDATA)>
+				<!ATTLIST sLow 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "sLow">
+			<!ELEMENT sCurrent (#PCDATA)>
+				<!ATTLIST sCurrent 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "sCurrent">
+			<!ELEMENT ret1Yr (#PCDATA)>
+				<!ATTLIST ret1Yr 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "ret1Yr">
+			<!ELEMENT ret5Yr (#PCDATA)>
+				<!ATTLIST ret5Yr 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "ret5Yr">
+	<!ELEMENT fundFamily (fundFamily_rec)*>
+		<!ATTLIST fundFamily KEY CDATA #FIXED "familyID" >
+		<!ELEMENT fundFamily_rec (familyID,company,cAddress)>
+			<!ELEMENT familyID (#PCDATA)>
+				<!ATTLIST familyID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "familyID">
+			<!ELEMENT company (#PCDATA)>
+				<!ATTLIST company 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "company">
+			<!ELEMENT cAddress (#PCDATA)>
+				<!ATTLIST cAddress 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "cAddress">
+	<!ELEMENT mutualFund (mutualFund_rec)*>
+		<!ATTLIST mutualFund KEY CDATA #FIXED "mTicker" >
+		<!ELEMENT mutualFund_rec (mTicker,mName,prinObj,mHigh,mLow,mCurrent,yield,familyID)>
+			<!ELEMENT mTicker (#PCDATA)>
+				<!ATTLIST mTicker 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mTicker">
+			<!ELEMENT mName (#PCDATA)>
+				<!ATTLIST mName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mName">
+			<!ELEMENT prinObj (#PCDATA)>
+				<!ATTLIST prinObj 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "prinObj">
+			<!ELEMENT mHigh (#PCDATA)>
+				<!ATTLIST mHigh 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "mHigh">
+			<!ELEMENT mLow (#PCDATA)>
+				<!ATTLIST mLow 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "mLow">
+			<!ELEMENT mCurrent (#PCDATA)>
+				<!ATTLIST mCurrent 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "mCurrent">
+			<!ELEMENT yield (#PCDATA)>
+				<!ATTLIST yield 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "yield">
+			<!ELEMENT familyID (#PCDATA)>
+				<!ATTLIST familyID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "familyID">
+	<!ELEMENT mutualFundPortfolio (mutualFundPortfolio_rec)*>
+		<!ATTLIST mutualFundPortfolio KEY CDATA #FIXED "taxPayerID, mTicker" >
+		<!ELEMENT mutualFundPortfolio_rec (taxPayerID,mTicker,mNumShares)>
+			<!ELEMENT taxPayerID (#PCDATA)>
+				<!ATTLIST taxPayerID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "taxPayerID">
+			<!ELEMENT mTicker (#PCDATA)>
+				<!ATTLIST mTicker 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "mTicker">
+			<!ELEMENT mNumShares (#PCDATA)>
+				<!ATTLIST mNumShares 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "mNumShares">
+	<!ELEMENT stockPortfolio (stockPortfolio_rec)*>
+		<!ATTLIST stockPortfolio KEY CDATA #FIXED "taxPayerID, sTicker" >
+		<!ELEMENT stockPortfolio_rec (taxPayerID,sTicker,sNumShares)>
+			<!ELEMENT taxPayerID (#PCDATA)>
+				<!ATTLIST taxPayerID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "taxPayerID">
+			<!ELEMENT sTicker (#PCDATA)>
+				<!ATTLIST sTicker 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sTicker">
+			<!ELEMENT sNumShares (#PCDATA)>
+				<!ATTLIST sNumShares 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "sNumShares">
+]>
+<database URL="D:\BookDBWiley\UnderstandingDBConceptsPractice\SupportingMaterial\WinRDBIdata\investmentPortfolio.xml">
+    <client>
+        <client_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <name><![CDATA[Client One]]></name>
+            <address><![CDATA[Address One]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <name><![CDATA[Client Two]]></name>
+            <address><![CDATA[Address Two]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[3]]></taxPayerID>
+            <name><![CDATA[Client Three]]></name>
+            <address><![CDATA[Address Three]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[4]]></taxPayerID>
+            <name><![CDATA[Client Four]]></name>
+            <address><![CDATA[Address Four]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[5]]></taxPayerID>
+            <name><![CDATA[Client Five]]></name>
+            <address><![CDATA[Address Five]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[6]]></taxPayerID>
+            <name><![CDATA[Client Six]]></name>
+            <address><![CDATA[Address Six]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[7]]></taxPayerID>
+            <name><![CDATA[Client Seven]]></name>
+            <address><![CDATA[Address Seven]]></address>
+        </client_rec>
+        <client_rec>
+            <taxPayerID><![CDATA[8]]></taxPayerID>
+            <name><![CDATA[Client Eight]]></name>
+            <address><![CDATA[Address Eight]]></address>
+        </client_rec>
+    </client>
+    <stock>
+        <stock_rec>
+            <sTicker><![CDATA[ABC]]></sTicker>
+            <sName><![CDATA[Stock ABC]]></sName>
+            <rating><![CDATA[NR]]></rating>
+            <prinBus><![CDATA[Entertainment]]></prinBus>
+            <sHigh><![CDATA[12.14]]></sHigh>
+            <sLow><![CDATA[14.56]]></sLow>
+            <sCurrent><![CDATA[23.59]]></sCurrent>
+            <ret1Yr><![CDATA[12.85]]></ret1Yr>
+            <ret5Yr><![CDATA[10.26]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[DEF]]></sTicker>
+            <sName><![CDATA[Stock DEF]]></sName>
+            <rating><![CDATA[NR]]></rating>
+            <prinBus><![CDATA[Consumer]]></prinBus>
+            <sHigh><![CDATA[10.42]]></sHigh>
+            <sLow><![CDATA[4.05]]></sLow>
+            <sCurrent><![CDATA[23.45]]></sCurrent>
+            <ret1Yr><![CDATA[14.93]]></ret1Yr>
+            <ret5Yr><![CDATA[11.58]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[GHI]]></sTicker>
+            <sName><![CDATA[Stock GHI]]></sName>
+            <rating><![CDATA[NR]]></rating>
+            <prinBus><![CDATA[Technology]]></prinBus>
+            <sHigh><![CDATA[10.87]]></sHigh>
+            <sLow><![CDATA[4.88]]></sLow>
+            <sCurrent><![CDATA[23.21]]></sCurrent>
+            <ret1Yr><![CDATA[8.73]]></ret1Yr>
+            <ret5Yr><![CDATA[10.25]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[JKL]]></sTicker>
+            <sName><![CDATA[Stock JKL]]></sName>
+            <rating><![CDATA[NR]]></rating>
+            <prinBus><![CDATA[Technology]]></prinBus>
+            <sHigh><![CDATA[10.68]]></sHigh>
+            <sLow><![CDATA[4.58]]></sLow>
+            <sCurrent><![CDATA[23.35]]></sCurrent>
+            <ret1Yr><![CDATA[1.34]]></ret1Yr>
+            <ret5Yr><![CDATA[5.17]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[MNO]]></sTicker>
+            <sName><![CDATA[Stock MNO]]></sName>
+            <rating><![CDATA[NR]]></rating>
+            <prinBus><![CDATA[Healthcare]]></prinBus>
+            <sHigh><![CDATA[1.98]]></sHigh>
+            <sLow><![CDATA[4.12]]></sLow>
+            <sCurrent><![CDATA[23.25]]></sCurrent>
+            <ret1Yr><![CDATA[10.37]]></ret1Yr>
+            <ret5Yr><![CDATA[19.77]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[PQR]]></sTicker>
+            <sName><![CDATA[Stock PQR]]></sName>
+            <rating><![CDATA[C]]></rating>
+            <prinBus><![CDATA[Global]]></prinBus>
+            <sHigh><![CDATA[1.92]]></sHigh>
+            <sLow><![CDATA[4.48]]></sLow>
+            <sCurrent><![CDATA[23.74]]></sCurrent>
+            <ret1Yr><![CDATA[1.17]]></ret1Yr>
+            <ret5Yr><![CDATA[9.86]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[STU]]></sTicker>
+            <sName><![CDATA[Stock STU]]></sName>
+            <rating><![CDATA[C]]></rating>
+            <prinBus><![CDATA[Technology]]></prinBus>
+            <sHigh><![CDATA[1.09]]></sHigh>
+            <sLow><![CDATA[4.63]]></sLow>
+            <sCurrent><![CDATA[3.18]]></sCurrent>
+            <ret1Yr><![CDATA[10.04]]></ret1Yr>
+            <ret5Yr><![CDATA[18.05]]></ret5Yr>
+        </stock_rec>
+        <stock_rec>
+            <sTicker><![CDATA[VWX]]></sTicker>
+            <sName><![CDATA[Stock VWX]]></sName>
+            <rating><![CDATA[A]]></rating>
+            <prinBus><![CDATA[Consumer]]></prinBus>
+            <sHigh><![CDATA[1.39]]></sHigh>
+            <sLow><![CDATA[14.63]]></sLow>
+            <sCurrent><![CDATA[23.15]]></sCurrent>
+            <ret1Yr><![CDATA[9.06]]></ret1Yr>
+            <ret5Yr><![CDATA[7.51]]></ret5Yr>
+        </stock_rec>
+    </stock>
+    <fundFamily>
+        <fundFamily_rec>
+            <familyID><![CDATA[F1]]></familyID>
+            <company><![CDATA[Fictitious]]></company>
+            <cAddress><![CDATA[Fictitious Adddress]]></cAddress>
+        </fundFamily_rec>
+        <fundFamily_rec>
+            <familyID><![CDATA[F2]]></familyID>
+            <company><![CDATA[Imagination]]></company>
+            <cAddress><![CDATA[Imagination Address]]></cAddress>
+        </fundFamily_rec>
+        <fundFamily_rec>
+            <familyID><![CDATA[F3]]></familyID>
+            <company><![CDATA[Third]]></company>
+            <cAddress><![CDATA[Third Address]]></cAddress>
+        </fundFamily_rec>
+    </fundFamily>
+    <mutualFund>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F1MF1]]></mTicker>
+            <mName><![CDATA[Blue Chip]]></mName>
+            <prinObj><![CDATA[G]]></prinObj>
+            <mHigh><![CDATA[9.05]]></mHigh>
+            <mLow><![CDATA[12.6]]></mLow>
+            <mCurrent><![CDATA[14.79]]></mCurrent>
+            <yield><![CDATA[2.06]]></yield>
+            <familyID><![CDATA[F1]]></familyID>
+        </mutualFund_rec>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F1MF2]]></mTicker>
+            <mName><![CDATA[Capital]]></mName>
+            <prinObj><![CDATA[G]]></prinObj>
+            <mHigh><![CDATA[10.88]]></mHigh>
+            <mLow><![CDATA[1.36]]></mLow>
+            <mCurrent><![CDATA[15.04]]></mCurrent>
+            <yield><![CDATA[4.63]]></yield>
+            <familyID><![CDATA[F1]]></familyID>
+        </mutualFund_rec>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F2MF1]]></mTicker>
+            <mName><![CDATA[Government]]></mName>
+            <prinObj><![CDATA[G]]></prinObj>
+            <mHigh><![CDATA[19.59]]></mHigh>
+            <mLow><![CDATA[12.52]]></mLow>
+            <mCurrent><![CDATA[1.54]]></mCurrent>
+            <yield><![CDATA[4.95]]></yield>
+            <familyID><![CDATA[F2]]></familyID>
+        </mutualFund_rec>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F2MF2]]></mTicker>
+            <mName><![CDATA[Overseas]]></mName>
+            <prinObj><![CDATA[I]]></prinObj>
+            <mHigh><![CDATA[19]]></mHigh>
+            <mLow><![CDATA[12.24]]></mLow>
+            <mCurrent><![CDATA[1.7]]></mCurrent>
+            <yield><![CDATA[4.07]]></yield>
+            <familyID><![CDATA[F2]]></familyID>
+        </mutualFund_rec>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F2MF3]]></mTicker>
+            <mName><![CDATA[Science and Technology]]></mName>
+            <prinObj><![CDATA[S]]></prinObj>
+            <mHigh><![CDATA[22.48]]></mHigh>
+            <mLow><![CDATA[12.28]]></mLow>
+            <mCurrent><![CDATA[1.76]]></mCurrent>
+            <yield><![CDATA[6.84]]></yield>
+            <familyID><![CDATA[F2]]></familyID>
+        </mutualFund_rec>
+        <mutualFund_rec>
+            <mTicker><![CDATA[F3MF1]]></mTicker>
+            <mName><![CDATA[International]]></mName>
+            <prinObj><![CDATA[I]]></prinObj>
+            <mHigh><![CDATA[1.14]]></mHigh>
+            <mLow><![CDATA[1.56]]></mLow>
+            <mCurrent><![CDATA[1.59]]></mCurrent>
+            <yield><![CDATA[1.41]]></yield>
+            <familyID><![CDATA[F3]]></familyID>
+        </mutualFund_rec>
+    </mutualFund>
+    <mutualFundPortfolio>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <mTicker><![CDATA[F1MF1]]></mTicker>
+            <mNumShares><![CDATA[15.51]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <mTicker><![CDATA[F1MF2]]></mTicker>
+            <mNumShares><![CDATA[23.32]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <mTicker><![CDATA[F2MF3]]></mTicker>
+            <mNumShares><![CDATA[29.92]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <mTicker><![CDATA[F1MF1]]></mTicker>
+            <mNumShares><![CDATA[58.85]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <mTicker><![CDATA[F1MF2]]></mTicker>
+            <mNumShares><![CDATA[28.82]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <mTicker><![CDATA[F2MF1]]></mTicker>
+            <mNumShares><![CDATA[18.81]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <mTicker><![CDATA[F2MF3]]></mTicker>
+            <mNumShares><![CDATA[45.54]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[3]]></taxPayerID>
+            <mTicker><![CDATA[F1MF1]]></mTicker>
+            <mNumShares><![CDATA[19.91]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[3]]></taxPayerID>
+            <mTicker><![CDATA[F1MF2]]></mTicker>
+            <mNumShares><![CDATA[18.18]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[4]]></taxPayerID>
+            <mTicker><![CDATA[F1MF1]]></mTicker>
+            <mNumShares><![CDATA[19]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[4]]></taxPayerID>
+            <mTicker><![CDATA[F2MF2]]></mTicker>
+            <mNumShares><![CDATA[19.19]]></mNumShares>
+        </mutualFundPortfolio_rec>
+        <mutualFundPortfolio_rec>
+            <taxPayerID><![CDATA[7]]></taxPayerID>
+            <mTicker><![CDATA[F2MF2]]></mTicker>
+            <mNumShares><![CDATA[19.98]]></mNumShares>
+        </mutualFundPortfolio_rec>
+    </mutualFundPortfolio>
+    <stockPortfolio>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <sTicker><![CDATA[ABC]]></sTicker>
+            <sNumShares><![CDATA[13.31]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <sTicker><![CDATA[DEF]]></sTicker>
+            <sNumShares><![CDATA[11.11]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <sTicker><![CDATA[GHI]]></sTicker>
+            <sNumShares><![CDATA[13.13]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[1]]></taxPayerID>
+            <sTicker><![CDATA[VWX]]></sTicker>
+            <sNumShares><![CDATA[201.3]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <sTicker><![CDATA[DEF]]></sTicker>
+            <sNumShares><![CDATA[12.21]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[2]]></taxPayerID>
+            <sTicker><![CDATA[ABC]]></sTicker>
+            <sNumShares><![CDATA[11.22]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[3]]></taxPayerID>
+            <sTicker><![CDATA[DEF]]></sTicker>
+            <sNumShares><![CDATA[18.81]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[5]]></taxPayerID>
+            <sTicker><![CDATA[PQR]]></sTicker>
+            <sNumShares><![CDATA[10.01]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[6]]></taxPayerID>
+            <sTicker><![CDATA[GHI]]></sTicker>
+            <sNumShares><![CDATA[19.91]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[6]]></taxPayerID>
+            <sTicker><![CDATA[STU]]></sTicker>
+            <sNumShares><![CDATA[19]]></sNumShares>
+        </stockPortfolio_rec>
+        <stockPortfolio_rec>
+            <taxPayerID><![CDATA[8]]></taxPayerID>
+            <sTicker><![CDATA[GHI]]></sTicker>
+            <sNumShares><![CDATA[19.19]]></sNumShares>
+        </stockPortfolio_rec>
+    </stockPortfolio>
+</database>

@@ -1,0 +1,60 @@
+@client(taxPayerID/char,name/char,address/char):taxPayerID
+'1','Client One','Address One'
+'2','Client Two','Address Two'
+'3','Client Three','Address Three'
+'4','Client Four','Address Four'
+'5','Client Five','Address Five'
+'6','Client Six','Address Six'
+'7','Client Seven','Address Seven'
+'8','Client Eight','Address Eight'
+
+@stock(sTicker/char,sName/char,rating/char,prinBus/char,sHigh/numeric,sLow/numeric,sCurrent/numeric,ret1Yr/numeric,ret5Yr/numeric):sTicker
+'ABC','Stock ABC','NR','Entertainment',12.14, 14.56, 23.59, 12.85, 10.26
+'DEF','Stock DEF','NR','Consumer',10.42, 4.05, 23.45, 14.93, 11.58
+'GHI','Stock GHI','NR','Technology',10.87, 4.88, 23.21, 8.73, 10.25
+'JKL','Stock JKL','NR','Technology',10.68, 4.58, 23.35, 1.34, 5.17
+'MNO','Stock MNO','NR','Healthcare',1.98, 4.12, 23.25, 10.37, 19.77
+'PQR','Stock PQR','C','Global',1.92, 4.48, 23.74, 1.17, 9.86
+'STU','Stock STU','C','Technology',1.09, 4.63, 3.18, 10.04, 18.05
+'VWX','Stock VWX','A','Consumer',1.39, 14.63, 23.15, 9.06, 7.51
+
+@fundFamily(familyID/char,company/char,cAddress/char):familyID
+'F1','Fictitious','Fictitious Adddress'
+'F2','Imagination','Imagination Address'
+'F3','Third','Third Address'
+
+@mutualFund(mTicker/char,mName/char,prinObj/char,mHigh/numeric,mLow/numeric,mCurrent/numeric,yield/numeric,familyID/char):mTicker
+'F1MF1','Blue Chip','G',9.05, 12.60, 14.79, 2.06,'F1'
+'F1MF2','Capital','G',10.88, 1.36, 15.04, 4.63,'F1'
+'F2MF1','Government','G',19.59, 12.52, 1.54, 4.95,'F2'
+'F2MF2','Overseas','I',19.00, 12.24, 1.70, 4.07,'F2'
+'F2MF3','Science and Technology','S',22.48, 12.28, 1.76, 6.84,'F2'
+'F3MF1','International','I',1.14, 1.56, 1.59, 1.41,'F3'
+
+@mutualFundPortfolio(taxPayerID/char,mTicker/char,mNumShares/numeric):taxPayerID, mTicker
+'1','F1MF1',15.51
+'1','F1MF2',23.32
+'1','F2MF3',29.92
+'2','F1MF1',58.85
+'2','F1MF2',28.82
+'2','F2MF1',18.81
+'2','F2MF3',45.54
+'3','F1MF1',19.91
+'3','F1MF2',18.18
+'4','F1MF1',19.00
+'4','F2MF2',19.19
+'7','F2MF2',19.98
+
+@stockPortfolio(taxPayerID/char,sTicker/char,sNumShares/numeric):taxPayerID, sTicker
+'1','ABC',13.31
+'1','DEF',11.11
+'1','GHI',13.13
+'1','VWX',201.30
+'2','DEF',12.21
+'2','ABC',11.22
+'3','DEF',18.81
+'5','PQR',10.01
+'6','GHI',19.91
+'6','STU',19.00
+'8','GHI',19.19
+

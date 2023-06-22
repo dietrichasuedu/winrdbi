@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE database [
+<!ELEMENT database (webpage,site,graphic,document,internal,external,displays)>
+	<!ATTLIST database URL CDATA #REQUIRED>
+	<!ELEMENT webpage (webpage_rec)*>
+		<!ATTLIST webpage KEY CDATA #FIXED "wID" >
+		<!ELEMENT webpage_rec (wID,wTitle,wURL,hits)>
+			<!ELEMENT wID (#PCDATA)>
+				<!ATTLIST wID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wID">
+			<!ELEMENT wTitle (#PCDATA)>
+				<!ATTLIST wTitle 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wTitle">
+			<!ELEMENT wURL (#PCDATA)>
+				<!ATTLIST wURL 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wURL">
+			<!ELEMENT hits (#PCDATA)>
+				<!ATTLIST hits 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "hits">
+	<!ELEMENT site (site_rec)*>
+		<!ATTLIST site KEY CDATA #FIXED "sID" >
+		<!ELEMENT site_rec (sID,sTitle,sURL)>
+			<!ELEMENT sID (#PCDATA)>
+				<!ATTLIST sID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sID">
+			<!ELEMENT sTitle (#PCDATA)>
+				<!ATTLIST sTitle 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sTitle">
+			<!ELEMENT sURL (#PCDATA)>
+				<!ATTLIST sURL 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sURL">
+	<!ELEMENT graphic (graphic_rec)*>
+		<!ATTLIST graphic KEY CDATA #FIXED "gID" >
+		<!ELEMENT graphic_rec (gID,gName,gType,src,alt)>
+			<!ELEMENT gID (#PCDATA)>
+				<!ATTLIST gID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "gID">
+			<!ELEMENT gName (#PCDATA)>
+				<!ATTLIST gName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "gName">
+			<!ELEMENT gType (#PCDATA)>
+				<!ATTLIST gType 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "gType">
+			<!ELEMENT src (#PCDATA)>
+				<!ATTLIST src 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "src">
+			<!ELEMENT alt (#PCDATA)>
+				<!ATTLIST alt 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "alt">
+	<!ELEMENT document (document_rec)*>
+		<!ATTLIST document KEY CDATA #FIXED "dID" >
+		<!ELEMENT document_rec (dID,dName,dType,dDescription,dDate,downloads,wID)>
+			<!ELEMENT dID (#PCDATA)>
+				<!ATTLIST dID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "dID">
+			<!ELEMENT dName (#PCDATA)>
+				<!ATTLIST dName 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "dName">
+			<!ELEMENT dType (#PCDATA)>
+				<!ATTLIST dType 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "dType">
+			<!ELEMENT dDescription (#PCDATA)>
+				<!ATTLIST dDescription 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "dDescription">
+			<!ELEMENT dDate (#PCDATA)>
+				<!ATTLIST dDate 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "dDate">
+			<!ELEMENT downloads (#PCDATA)>
+				<!ATTLIST downloads 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "downloads">
+			<!ELEMENT wID (#PCDATA)>
+				<!ATTLIST wID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wID">
+	<!ELEMENT internal (internal_rec)*>
+		<!ATTLIST internal KEY CDATA #FIXED "sourceID, targetID" >
+		<!ELEMENT internal_rec (sourceID,targetID)>
+			<!ELEMENT sourceID (#PCDATA)>
+				<!ATTLIST sourceID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sourceID">
+			<!ELEMENT targetID (#PCDATA)>
+				<!ATTLIST targetID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "targetID">
+	<!ELEMENT external (external_rec)*>
+		<!ATTLIST external KEY CDATA #FIXED "wID, sID" >
+		<!ELEMENT external_rec (wID,sID,followed)>
+			<!ELEMENT wID (#PCDATA)>
+				<!ATTLIST wID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wID">
+			<!ELEMENT sID (#PCDATA)>
+				<!ATTLIST sID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "sID">
+			<!ELEMENT followed (#PCDATA)>
+				<!ATTLIST followed 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "followed">
+	<!ELEMENT displays (displays_rec)*>
+		<!ATTLIST displays KEY CDATA #FIXED "wID, gID" >
+		<!ELEMENT displays_rec (wID,gID)>
+			<!ELEMENT wID (#PCDATA)>
+				<!ATTLIST wID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "wID">
+			<!ELEMENT gID (#PCDATA)>
+				<!ATTLIST gID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "gID">
+]>
+<database URL="D:\BookDBWiley\UnderstandingDBConceptsPractice\SupportingMaterial\WinRDBIdata\webPage.xml">
+    <webpage>
+        <webpage_rec>
+            <wID><![CDATA[W01]]></wID>
+            <wTitle><![CDATA[WinRDBI Educational Tool]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu]]></wURL>
+            <hits><![CDATA[100000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W02]]></wID>
+            <wTitle><![CDATA[WinRDBI Download]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/download.html]]></wURL>
+            <hits><![CDATA[90000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W03]]></wID>
+            <wTitle><![CDATA[WinRDBI FAQs]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/faqs.html]]></wURL>
+            <hits><![CDATA[75000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W04]]></wID>
+            <wTitle><![CDATA[WinRDBI Samples]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/samples.html]]></wURL>
+            <hits><![CDATA[125000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W05]]></wID>
+            <wTitle><![CDATA[WinRDBI User Guide]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/UserGuide/UsersGuide.html]]></wURL>
+            <hits><![CDATA[50000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W06]]></wID>
+            <wTitle><![CDATA[WinRDBI History]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/history.html]]></wURL>
+            <hits><![CDATA[10000]]></hits>
+        </webpage_rec>
+        <webpage_rec>
+            <wID><![CDATA[W07]]></wID>
+            <wTitle><![CDATA[Author Website]]></wTitle>
+            <wURL><![CDATA[https://winrdbi.asu.edu/author/index.html]]></wURL>
+            <hits><![CDATA[100]]></hits>
+        </webpage_rec>
+    </webpage>
+    <site>
+        <site_rec>
+            <sID><![CDATA[S01]]></sID>
+            <sTitle><![CDATA[Suzanne W. Dietrich]]></sTitle>
+            <sURL><![CDATA[https://www.public.asu.edu/~dietrich/]]></sURL>
+        </site_rec>
+        <site_rec>
+            <sID><![CDATA[S02]]></sID>
+            <sTitle><![CDATA[Amzi!]]></sTitle>
+            <sURL><![CDATA[http://www.amzi.com/]]></sURL>
+        </site_rec>
+        <site_rec>
+            <sID><![CDATA[S03]]></sID>
+            <sTitle><![CDATA[An Educational Tool for Formal Relational Query Languages]]></sTitle>
+            <sURL><![CDATA[https://doi.org/10.1080/0899340930040201]]></sURL>
+        </site_rec>
+        <site_rec>
+            <sID><![CDATA[S04]]></sID>
+            <sTitle><![CDATA[WinRDBI: A Windows-based Relational Database Educational Tool]]></sTitle>
+            <sURL><![CDATA[https://doi.org/10.1145/268085.268131]]></sURL>
+        </site_rec>
+    </site>
+    <graphic>
+        <graphic_rec>
+            <gID><![CDATA[G01]]></gID>
+            <gName><![CDATA[understandingbook]]></gName>
+            <gType><![CDATA[jpg]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[Understanding Databases:Concepts and Practice]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G02]]></gID>
+            <gName><![CDATA[initial]]></gName>
+            <gType><![CDATA[png]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[WinRDBI Initial Screenshot]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G03]]></gID>
+            <gName><![CDATA[menu]]></gName>
+            <gType><![CDATA[png]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[WinRDBI Menu]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G04]]></gID>
+            <gName><![CDATA[toolbar]]></gName>
+            <gType><![CDATA[png]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[WinRDBI Toolbar]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G05]]></gID>
+            <gName><![CDATA[newQuery]]></gName>
+            <gType><![CDATA[gif]]></gType>
+            <src><![CDATA[icons]]></src>
+            <alt><![CDATA[WinRDBI Icon: New Query]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G06]]></gID>
+            <gName><![CDATA[newDatabase]]></gName>
+            <gType><![CDATA[gif]]></gType>
+            <src><![CDATA[icons]]></src>
+            <alt><![CDATA[WinRDBI Icon: New Database]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G07]]></gID>
+            <gName><![CDATA[schemaPane]]></gName>
+            <gType><![CDATA[jpg]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[WinRDBI Schema Pane]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G08]]></gID>
+            <gName><![CDATA[questionMark]]></gName>
+            <gType><![CDATA[gif]]></gType>
+            <src><![CDATA[icons]]></src>
+            <alt><![CDATA[Question Mark]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G09]]></gID>
+            <gName><![CDATA[exclamationMark]]></gName>
+            <gType><![CDATA[png]]></gType>
+            <src><![CDATA[icons]]></src>
+            <alt><![CDATA[Exclamation Mark]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G10]]></gID>
+            <gName><![CDATA[hotairballoon]]></gName>
+            <gType><![CDATA[jpg]]></gType>
+            <src><![CDATA[images]]></src>
+            <alt><![CDATA[Hot Air Balloon]]></alt>
+        </graphic_rec>
+        <graphic_rec>
+            <gID><![CDATA[G11]]></gID>
+            <gName><![CDATA[asulogo]]></gName>
+            <gType><![CDATA[gif]]></gType>
+            <src><![CDATA[icons]]></src>
+            <alt><![CDATA[ASU Logo]]></alt>
+        </graphic_rec>
+    </graphic>
+    <document>
+        <document_rec>
+            <dID><![CDATA[D01]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[accdb]]></dType>
+            <dDescription><![CDATA[Employee Training Access Database]]></dDescription>
+            <dDate><![CDATA[2020-08-01]]></dDate>
+            <downloads><![CDATA[500]]></downloads>
+            <wID><![CDATA[W07]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D02]]></dID>
+            <dName><![CDATA[WinRDBI2020-windows]]></dName>
+            <dType><![CDATA[zip]]></dType>
+            <dDescription><![CDATA[Zip file of WinRDBI 2020]]></dDescription>
+            <dDate><![CDATA[2020-08-01]]></dDate>
+            <downloads><![CDATA[110000]]></downloads>
+            <wID><![CDATA[W02]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D03]]></dID>
+            <dName><![CDATA[WinRDBI]]></dName>
+            <dType><![CDATA[ppt]]></dType>
+            <dDescription><![CDATA[WinRDBI Powerpoint Presentation]]></dDescription>
+            <dDate><![CDATA[2010-12-28]]></dDate>
+            <downloads><![CDATA[333]]></downloads>
+            <wID><![CDATA[W07]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D10]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[rdb]]></dType>
+            <dDescription><![CDATA[Employee Training Data - RDB]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1010]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D11]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[xml]]></dType>
+            <dDescription><![CDATA[Employee Training Data - XML]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1111]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D12]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[alg]]></dType>
+            <dDescription><![CDATA[Employee Training Queries - ALG]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1212]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D13]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[drc]]></dType>
+            <dDescription><![CDATA[Employee Training Queries - DRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1313]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D14]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[dbn]]></dType>
+            <dDescription><![CDATA[Employee Training Queries - DBN]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1414]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D15]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[trc]]></dType>
+            <dDescription><![CDATA[Employee Training Queries - TRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1515]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D16]]></dID>
+            <dName><![CDATA[emptraining]]></dName>
+            <dType><![CDATA[sql]]></dType>
+            <dDescription><![CDATA[Employee Training Queries - SQL]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1616]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D20]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[rdb]]></dType>
+            <dDescription><![CDATA[Web Page Data - RDB]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1020]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D21]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[xml]]></dType>
+            <dDescription><![CDATA[Web Page Data - XML]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1121]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D22]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[alg]]></dType>
+            <dDescription><![CDATA[Web Page Queries - ALG]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1222]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D23]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[drc]]></dType>
+            <dDescription><![CDATA[Web Page Queries - DRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1323]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D24]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[dbn]]></dType>
+            <dDescription><![CDATA[Web Page Queries - DBN]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1424]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D25]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[trc]]></dType>
+            <dDescription><![CDATA[Web Page Queries - TRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1525]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D26]]></dID>
+            <dName><![CDATA[webpage]]></dName>
+            <dType><![CDATA[sql]]></dType>
+            <dDescription><![CDATA[Web Page Queries - SQL]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1626]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D30]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[rdb]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Data - RDB]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1030]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D31]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[xml]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Data - XML]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1131]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D32]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[alg]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Queries - ALG]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1232]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D33]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[drc]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Queries - DRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1333]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D34]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[dbn]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Queries - DBN]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1434]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D35]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[trc]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Queries - TRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1535]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D36]]></dID>
+            <dName><![CDATA[invest]]></dName>
+            <dType><![CDATA[sql]]></dType>
+            <dDescription><![CDATA[Investment Portfolio Queries - SQL]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1636]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D40]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[rdb]]></dType>
+            <dDescription><![CDATA[New Home Data - RDB]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1040]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D41]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[xml]]></dType>
+            <dDescription><![CDATA[New Home Data - XML]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1141]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D42]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[alg]]></dType>
+            <dDescription><![CDATA[New Home Queries - ALG]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1242]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D43]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[drc]]></dType>
+            <dDescription><![CDATA[New Home Queries - DRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1343]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D44]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[dbn]]></dType>
+            <dDescription><![CDATA[New Home Queries - DBN]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1444]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D45]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[trc]]></dType>
+            <dDescription><![CDATA[New Home Queries - TRC]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1545]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+        <document_rec>
+            <dID><![CDATA[D46]]></dID>
+            <dName><![CDATA[newhome]]></dName>
+            <dType><![CDATA[sql]]></dType>
+            <dDescription><![CDATA[New Home Queries - SQL]]></dDescription>
+            <dDate><![CDATA[2020-12-28]]></dDate>
+            <downloads><![CDATA[1646]]></downloads>
+            <wID><![CDATA[W04]]></wID>
+        </document_rec>
+    </document>
+    <internal>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W02]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W03]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W05]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W06]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W01]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W02]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W03]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W04]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W05]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W06]]></sourceID>
+            <targetID><![CDATA[W07]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W07]]></sourceID>
+            <targetID><![CDATA[W01]]></targetID>
+        </internal_rec>
+        <internal_rec>
+            <sourceID><![CDATA[W07]]></sourceID>
+            <targetID><![CDATA[W04]]></targetID>
+        </internal_rec>
+    </internal>
+    <external>
+        <external_rec>
+            <wID><![CDATA[W01]]></wID>
+            <sID><![CDATA[S01]]></sID>
+            <followed><![CDATA[11]]></followed>
+        </external_rec>
+        <external_rec>
+            <wID><![CDATA[W01]]></wID>
+            <sID><![CDATA[S02]]></sID>
+            <followed><![CDATA[12]]></followed>
+        </external_rec>
+        <external_rec>
+            <wID><![CDATA[W07]]></wID>
+            <sID><![CDATA[S01]]></sID>
+            <followed><![CDATA[71]]></followed>
+        </external_rec>
+        <external_rec>
+            <wID><![CDATA[W06]]></wID>
+            <sID><![CDATA[S03]]></sID>
+            <followed><![CDATA[30]]></followed>
+        </external_rec>
+        <external_rec>
+            <wID><![CDATA[W06]]></wID>
+            <sID><![CDATA[S04]]></sID>
+            <followed><![CDATA[551]]></followed>
+        </external_rec>
+    </external>
+    <displays>
+        <displays_rec>
+            <wID><![CDATA[W01]]></wID>
+            <gID><![CDATA[G01]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W07]]></wID>
+            <gID><![CDATA[G01]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G02]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G03]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G04]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G05]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G06]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G07]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W03]]></wID>
+            <gID><![CDATA[G08]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W03]]></wID>
+            <gID><![CDATA[G09]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W01]]></wID>
+            <gID><![CDATA[G10]]></gID>
+        </displays_rec>
+        <displays_rec>
+            <wID><![CDATA[W05]]></wID>
+            <gID><![CDATA[G11]]></gID>
+        </displays_rec>
+    </displays>
+</database>

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE database [
+<!ELEMENT database (employee,trainingCourse,technologyArea,takes)>
+	<!ATTLIST database URL CDATA #REQUIRED>
+	<!ELEMENT employee (employee_rec)*>
+		<!ATTLIST employee KEY CDATA #FIXED "eID" >
+		<!ELEMENT employee_rec (eID,eLast,eFirst,eTitle,eSalary)>
+			<!ELEMENT eID (#PCDATA)>
+				<!ATTLIST eID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "eID">
+			<!ELEMENT eLast (#PCDATA)>
+				<!ATTLIST eLast 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "eLast">
+			<!ELEMENT eFirst (#PCDATA)>
+				<!ATTLIST eFirst 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "eFirst">
+			<!ELEMENT eTitle (#PCDATA)>
+				<!ATTLIST eTitle 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "eTitle">
+			<!ELEMENT eSalary (#PCDATA)>
+				<!ATTLIST eSalary 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "eSalary">
+	<!ELEMENT trainingCourse (trainingCourse_rec)*>
+		<!ATTLIST trainingCourse KEY CDATA #FIXED "cID" >
+		<!ELEMENT trainingCourse_rec (cID,cTitle,cHours,areaID)>
+			<!ELEMENT cID (#PCDATA)>
+				<!ATTLIST cID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "cID">
+			<!ELEMENT cTitle (#PCDATA)>
+				<!ATTLIST cTitle 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "cTitle">
+			<!ELEMENT cHours (#PCDATA)>
+				<!ATTLIST cHours 
+				TYPE CDATA #FIXED "numeric" 
+				NAME CDATA #FIXED "cHours">
+			<!ELEMENT areaID (#PCDATA)>
+				<!ATTLIST areaID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "areaID">
+	<!ELEMENT technologyArea (technologyArea_rec)*>
+		<!ATTLIST technologyArea KEY CDATA #FIXED "aID" >
+		<!ELEMENT technologyArea_rec (aID,aTitle,aURL,aLeadID)>
+			<!ELEMENT aID (#PCDATA)>
+				<!ATTLIST aID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "aID">
+			<!ELEMENT aTitle (#PCDATA)>
+				<!ATTLIST aTitle 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "aTitle">
+			<!ELEMENT aURL (#PCDATA)>
+				<!ATTLIST aURL 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "aURL">
+			<!ELEMENT aLeadID (#PCDATA)>
+				<!ATTLIST aLeadID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "aLeadID">
+	<!ELEMENT takes (takes_rec)*>
+		<!ATTLIST takes KEY CDATA #FIXED "eID, cID" >
+		<!ELEMENT takes_rec (eID,cID,tDate)>
+			<!ELEMENT eID (#PCDATA)>
+				<!ATTLIST eID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "eID">
+			<!ELEMENT cID (#PCDATA)>
+				<!ATTLIST cID 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "cID">
+			<!ELEMENT tDate (#PCDATA)>
+				<!ATTLIST tDate 
+				TYPE CDATA #FIXED "char" 
+				NAME CDATA #FIXED "tDate">
+]>
+<database URL="D:\BookDBWiley\UnderstandingDBConceptsPractice\SupportingMaterial\WinRDBIdata\employeeTraining.xml">
+    <employee>
+        <employee_rec>
+            <eID><![CDATA[111]]></eID>
+            <eLast><![CDATA[Last111]]></eLast>
+            <eFirst><![CDATA[First111]]></eFirst>
+            <eTitle><![CDATA[Database Administrator]]></eTitle>
+            <eSalary><![CDATA[75111]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[222]]></eID>
+            <eLast><![CDATA[Last222]]></eLast>
+            <eFirst><![CDATA[First222]]></eFirst>
+            <eTitle><![CDATA[Software Engineer]]></eTitle>
+            <eSalary><![CDATA[51722]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[321]]></eID>
+            <eLast><![CDATA[Last321]]></eLast>
+            <eFirst><![CDATA[First321]]></eFirst>
+            <eTitle><![CDATA[Database Administrator]]></eTitle>
+            <eSalary><![CDATA[68321]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[333]]></eID>
+            <eLast><![CDATA[Last333]]></eLast>
+            <eFirst><![CDATA[First333]]></eFirst>
+            <eTitle><![CDATA[Sr Software Engineer]]></eTitle>
+            <eSalary><![CDATA[60333]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[345]]></eID>
+            <eLast><![CDATA[Last345]]></eLast>
+            <eFirst><![CDATA[First345]]></eFirst>
+            <eTitle><![CDATA[Sr Software Engineer]]></eTitle>
+            <eSalary><![CDATA[59345]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[369]]></eID>
+            <eLast><![CDATA[Last369]]></eLast>
+            <eFirst><![CDATA[First369]]></eFirst>
+            <eTitle><![CDATA[Software Engineer]]></eTitle>
+            <eSalary><![CDATA[36369]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[444]]></eID>
+            <eLast><![CDATA[Last444]]></eLast>
+            <eFirst><![CDATA[First444]]></eFirst>
+            <eTitle><![CDATA[Software Engineer]]></eTitle>
+            <eSalary><![CDATA[44444]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[456]]></eID>
+            <eLast><![CDATA[Last456]]></eLast>
+            <eFirst><![CDATA[First456]]></eFirst>
+            <eTitle><![CDATA[Software Engineer]]></eTitle>
+            <eSalary><![CDATA[45456]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[555]]></eID>
+            <eLast><![CDATA[Last555]]></eLast>
+            <eFirst><![CDATA[First555]]></eFirst>
+            <eTitle><![CDATA[Sr Software Engineer]]></eTitle>
+            <eSalary><![CDATA[55555]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[654]]></eID>
+            <eLast><![CDATA[Last654]]></eLast>
+            <eFirst><![CDATA[First654]]></eFirst>
+            <eTitle><![CDATA[Project Lead]]></eTitle>
+            <eSalary><![CDATA[60654]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[666]]></eID>
+            <eLast><![CDATA[Last666]]></eLast>
+            <eFirst><![CDATA[First666]]></eFirst>
+            <eTitle><![CDATA[Project Lead]]></eTitle>
+            <eSalary><![CDATA[66666]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[678]]></eID>
+            <eLast><![CDATA[Last678]]></eLast>
+            <eFirst><![CDATA[First678]]></eFirst>
+            <eTitle><![CDATA[Project Lead]]></eTitle>
+            <eSalary><![CDATA[67678]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[693]]></eID>
+            <eLast><![CDATA[Last693]]></eLast>
+            <eFirst><![CDATA[First693]]></eFirst>
+            <eTitle><![CDATA[Project Lead]]></eTitle>
+            <eSalary><![CDATA[69693]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[777]]></eID>
+            <eLast><![CDATA[Last777]]></eLast>
+            <eFirst><![CDATA[First777]]></eFirst>
+            <eTitle><![CDATA[Database Administrator]]></eTitle>
+            <eSalary><![CDATA[77777]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[789]]></eID>
+            <eLast><![CDATA[Last789]]></eLast>
+            <eFirst><![CDATA[First789]]></eFirst>
+            <eTitle><![CDATA[Database Administrator]]></eTitle>
+            <eSalary><![CDATA[78789]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[888]]></eID>
+            <eLast><![CDATA[Last888]]></eLast>
+            <eFirst><![CDATA[First888]]></eFirst>
+            <eTitle><![CDATA[Database Administrator]]></eTitle>
+            <eSalary><![CDATA[88888]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[963]]></eID>
+            <eLast><![CDATA[Last963]]></eLast>
+            <eFirst><![CDATA[First963]]></eFirst>
+            <eTitle><![CDATA[Manager]]></eTitle>
+            <eSalary><![CDATA[98963]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[987]]></eID>
+            <eLast><![CDATA[Last987]]></eLast>
+            <eFirst><![CDATA[First987]]></eFirst>
+            <eTitle><![CDATA[Manager]]></eTitle>
+            <eSalary><![CDATA[99987]]></eSalary>
+        </employee_rec>
+        <employee_rec>
+            <eID><![CDATA[999]]></eID>
+            <eLast><![CDATA[Last999]]></eLast>
+            <eFirst><![CDATA[First999]]></eFirst>
+            <eTitle><![CDATA[Manager]]></eTitle>
+            <eSalary><![CDATA[100999]]></eSalary>
+        </employee_rec>
+    </employee>
+    <trainingCourse>
+        <trainingCourse_rec>
+            <cID><![CDATA[DB01]]></cID>
+            <cTitle><![CDATA[Introduction to Databases]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[DB]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[DB02]]></cID>
+            <cTitle><![CDATA[Query Languages]]></cTitle>
+            <cHours><![CDATA[16]]></cHours>
+            <areaID><![CDATA[DB]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[DB03]]></cID>
+            <cTitle><![CDATA[Data Science]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[DB]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[DB04]]></cID>
+            <cTitle><![CDATA[Big Data]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[DB]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[JA01]]></cID>
+            <cTitle><![CDATA[Introduction to Java]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[JA]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[JA02]]></cID>
+            <cTitle><![CDATA[JavaFX]]></cTitle>
+            <cHours><![CDATA[16]]></cHours>
+            <areaID><![CDATA[JA]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[JA03]]></cID>
+            <cTitle><![CDATA[Java Streams]]></cTitle>
+            <cHours><![CDATA[32]]></cHours>
+            <areaID><![CDATA[JA]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[JA04]]></cID>
+            <cTitle><![CDATA[JDBC]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[JA]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[SE01]]></cID>
+            <cTitle><![CDATA[Patterns]]></cTitle>
+            <cHours><![CDATA[16]]></cHours>
+            <areaID><![CDATA[SE]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[SE02]]></cID>
+            <cTitle><![CDATA[Validation and Verification]]></cTitle>
+            <cHours><![CDATA[32]]></cHours>
+            <areaID><![CDATA[SE]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[SE03]]></cID>
+            <cTitle><![CDATA[Software Components]]></cTitle>
+            <cHours><![CDATA[40]]></cHours>
+            <areaID><![CDATA[SE]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[WW01]]></cID>
+            <cTitle><![CDATA[Dynamic HTML]]></cTitle>
+            <cHours><![CDATA[8]]></cHours>
+            <areaID><![CDATA[WW]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[WW02]]></cID>
+            <cTitle><![CDATA[XML]]></cTitle>
+            <cHours><![CDATA[16]]></cHours>
+            <areaID><![CDATA[WW]]></areaID>
+        </trainingCourse_rec>
+        <trainingCourse_rec>
+            <cID><![CDATA[WW03]]></cID>
+            <cTitle><![CDATA[XSLT]]></cTitle>
+            <cHours><![CDATA[24]]></cHours>
+            <areaID><![CDATA[WW]]></areaID>
+        </trainingCourse_rec>
+    </trainingCourse>
+    <technologyArea>
+        <technologyArea_rec>
+            <aID><![CDATA[DB]]></aID>
+            <aTitle><![CDATA[Database]]></aTitle>
+            <aURL><![CDATA[http://www.company.intranet/technology/db]]></aURL>
+            <aLeadID><![CDATA[321]]></aLeadID>
+        </technologyArea_rec>
+        <technologyArea_rec>
+            <aID><![CDATA[JA]]></aID>
+            <aTitle><![CDATA[Java]]></aTitle>
+            <aURL><![CDATA[http://www.company.intranet/technology/java]]></aURL>
+            <aLeadID><![CDATA[333]]></aLeadID>
+        </technologyArea_rec>
+        <technologyArea_rec>
+            <aID><![CDATA[SE]]></aID>
+            <aTitle><![CDATA[Software Engineering]]></aTitle>
+            <aURL><![CDATA[http://www.company.intranet/technology/software]]></aURL>
+            <aLeadID><![CDATA[345]]></aLeadID>
+        </technologyArea_rec>
+        <technologyArea_rec>
+            <aID><![CDATA[WW]]></aID>
+            <aTitle><![CDATA[Web]]></aTitle>
+            <aURL><![CDATA[http://www.company.intranet/technology/web]]></aURL>
+            <aLeadID><![CDATA[369]]></aLeadID>
+        </technologyArea_rec>
+    </technologyArea>
+    <takes>
+        <takes_rec>
+            <eID><![CDATA[321]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-07-24]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[333]]></eID>
+            <cID><![CDATA[JA04]]></cID>
+            <tDate><![CDATA[2017-07-27]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[333]]></eID>
+            <cID><![CDATA[SE01]]></cID>
+            <tDate><![CDATA[2017-06-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[345]]></eID>
+            <cID><![CDATA[SE01]]></cID>
+            <tDate><![CDATA[2017-06-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[345]]></eID>
+            <cID><![CDATA[SE02]]></cID>
+            <tDate><![CDATA[2017-06-02]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[345]]></eID>
+            <cID><![CDATA[WW01]]></cID>
+            <tDate><![CDATA[2017-08-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[369]]></eID>
+            <cID><![CDATA[JA04]]></cID>
+            <tDate><![CDATA[2017-07-27]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[369]]></eID>
+            <cID><![CDATA[WW01]]></cID>
+            <tDate><![CDATA[2017-08-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[369]]></eID>
+            <cID><![CDATA[WW02]]></cID>
+            <tDate><![CDATA[2017-08-02]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[369]]></eID>
+            <cID><![CDATA[WW03]]></cID>
+            <tDate><![CDATA[2017-08-03]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[444]]></eID>
+            <cID><![CDATA[DB01]]></cID>
+            <tDate><![CDATA[2017-05-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[444]]></eID>
+            <cID><![CDATA[DB02]]></cID>
+            <tDate><![CDATA[2017-09-15]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[456]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2018-01-15]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[456]]></eID>
+            <cID><![CDATA[WW01]]></cID>
+            <tDate><![CDATA[2018-03-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[555]]></eID>
+            <cID><![CDATA[DB03]]></cID>
+            <tDate><![CDATA[2017-09-22]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[666]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-01-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[678]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-01-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[678]]></eID>
+            <cID><![CDATA[JA02]]></cID>
+            <tDate><![CDATA[2017-01-02]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[693]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-07-24]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[693]]></eID>
+            <cID><![CDATA[JA02]]></cID>
+            <tDate><![CDATA[2017-01-02]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[693]]></eID>
+            <cID><![CDATA[JA03]]></cID>
+            <tDate><![CDATA[2017-12-12]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[693]]></eID>
+            <cID><![CDATA[JA04]]></cID>
+            <tDate><![CDATA[2017-12-04]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[777]]></eID>
+            <cID><![CDATA[DB01]]></cID>
+            <tDate><![CDATA[2017-05-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[777]]></eID>
+            <cID><![CDATA[DB02]]></cID>
+            <tDate><![CDATA[2017-09-15]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[777]]></eID>
+            <cID><![CDATA[DB03]]></cID>
+            <tDate><![CDATA[2017-09-22]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[777]]></eID>
+            <cID><![CDATA[DB04]]></cID>
+            <tDate><![CDATA[2017-09-29]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[789]]></eID>
+            <cID><![CDATA[WW01]]></cID>
+            <tDate><![CDATA[2018-03-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[888]]></eID>
+            <cID><![CDATA[DB01]]></cID>
+            <tDate><![CDATA[2017-05-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[888]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-07-24]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[888]]></eID>
+            <cID><![CDATA[SE01]]></cID>
+            <tDate><![CDATA[2017-06-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[888]]></eID>
+            <cID><![CDATA[WW01]]></cID>
+            <tDate><![CDATA[2017-08-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[987]]></eID>
+            <cID><![CDATA[JA01]]></cID>
+            <tDate><![CDATA[2017-07-24]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[999]]></eID>
+            <cID><![CDATA[DB01]]></cID>
+            <tDate><![CDATA[2017-05-01]]></tDate>
+        </takes_rec>
+        <takes_rec>
+            <eID><![CDATA[999]]></eID>
+            <cID><![CDATA[SE01]]></cID>
+            <tDate><![CDATA[2017-06-01]]></tDate>
+        </takes_rec>
+    </takes>
+</database>

@@ -1,0 +1,78 @@
+@employee(eID/char,eLast/char,eFirst/char,eTitle/char,eSalary/numeric):eID
+'111','Last111','First111','Database Administrator',75111
+'222','Last222','First222','Software Engineer',51722
+'321','Last321','First321','Database Administrator',68321
+'333','Last333','First333','Sr Software Engineer',60333
+'345','Last345','First345','Sr Software Engineer',59345
+'369','Last369','First369','Software Engineer',36369
+'444','Last444','First444','Software Engineer',44444
+'456','Last456','First456','Software Engineer',45456
+'555','Last555','First555','Sr Software Engineer',55555
+'654','Last654','First654','Project Lead',60654
+'666','Last666','First666','Project Lead',66666
+'678','Last678','First678','Project Lead',67678
+'693','Last693','First693','Project Lead',69693
+'777','Last777','First777','Database Administrator',77777
+'789','Last789','First789','Database Administrator',78789
+'888','Last888','First888','Database Administrator',88888
+'963','Last963','First963','Manager',98963
+'987','Last987','First987','Manager',99987
+'999','Last999','First999','Manager',100999
+
+@trainingCourse(cID/char,cTitle/char,cHours/numeric,areaID/char):cID
+'DB01','Introduction to Databases',8,'DB'
+'DB02','Query Languages',16,'DB'
+'DB03','Data Science',8,'DB'
+'DB04','Big Data',8,'DB'
+'JA01','Introduction to Java',8,'JA'
+'JA02','JavaFX',16,'JA'
+'JA03','Java Streams',32,'JA'
+'JA04','JDBC',8,'JA'
+'SE01','Patterns',16,'SE'
+'SE02','Validation and Verification',32,'SE'
+'SE03','Software Components',40,'SE'
+'WW01','Dynamic HTML',8,'WW'
+'WW02','XML',16,'WW'
+'WW03','XSLT',24,'WW'
+
+@technologyArea(aID/char,aTitle/char,aURL/char,aLeadID/char):aID
+'DB','Database','http://www.company.intranet/technology/db','321'
+'JA','Java','http://www.company.intranet/technology/java','333'
+'SE','Software Engineering','http://www.company.intranet/technology/software','345'
+'WW','Web','http://www.company.intranet/technology/web','369'
+
+@takes(eID/char,cID/char,tDate/char):eID,cID
+'321','JA01','2017-07-24'
+'333','JA04','2017-07-27'
+'333','SE01','2017-06-01'
+'345','SE01','2017-06-01'
+'345','SE02','2017-06-02'
+'345','WW01','2017-08-01'
+'369','JA04','2017-07-27'
+'369','WW01','2017-08-01'
+'369','WW02','2017-08-02'
+'369','WW03','2017-08-03'
+'444','DB01','2017-05-01'
+'444','DB02','2017-09-15'
+'456','JA01','2018-01-15'
+'456','WW01','2018-03-01'
+'555','DB03','2017-09-22'
+'666','JA01','2017-01-01'
+'678','JA01','2017-01-01'
+'678','JA02','2017-01-02'
+'693','JA01','2017-07-24'
+'693','JA02','2017-01-02'
+'693','JA03','2017-12-12'
+'693','JA04','2017-12-04'
+'777','DB01','2017-05-01'
+'777','DB02','2017-09-15'
+'777','DB03','2017-09-22'
+'777','DB04','2017-09-29'
+'789','WW01','2018-03-01'
+'888','DB01','2017-05-01'
+'888','JA01','2017-07-24'
+'888','SE01','2017-06-01'
+'888','WW01','2017-08-01'
+'987','JA01','2017-07-24'
+'999','DB01','2017-05-01'
+'999','SE01','2017-06-01'

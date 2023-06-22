@@ -1,0 +1,126 @@
+%  Understanding Databases: Concepts and Practice
+%  S. W. Dietrich
+%  Chapter 4 Relational Calculus: Domain Relational Calculus By Name 
+%  Queries in Chapter
+
+% EMPLOYEE TRAINING 
+% employee(eID, eLast, eFirst, eTitle, eSalary)      primary key: eID
+% technologyArea(aID, aTitle, aURL, aLeadID)      primary key: aID
+%    foreign key (aLeadID) references employee(eID)
+% trainingCourse(cID, cTitle, cHours, areaID)        primary key: cID
+%    foreign key (areaID) references technologyArea(aID) 
+% takes(eID, cID, tDate)                                           primary key: eID, cID
+%    foreign key (eID) references employee(eID)
+%    foreign key (cID) references trainingCourse(cID)
+
+% 4.3.1 Fundamental Query Expressions
+
+% Table 4.10  DRC Sample Filtering Queries
+
+dbn_Managers(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) <- 
+	employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and T = 'Manager';
+
+dbn_Titles(eTitle: T) <- employee(eTitle: T);
+
+dbn_SalariesLT60K(eLast: L, eFirst: F, eSalary: S) <- employee(eLast: L, eFirst: F, eSalary: S) and S < 60000;
+
+%----------------------------------------------------------------
+
+dbn_employeeLeads(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary, aID: AID, aTitle: ATitle, aURL: AURL, aLeadID: ALeadID) <-
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	technologyArea(aID: AID, aTitle: ATitle, aURL: AURL, aLeadID: ALeadID) and EID = ALeadID;
+
+dbn_employeeLeads_shortcut(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary, aID: AID, aTitle: ATitle, aURL: AURL) <-
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	technologyArea(aID: AID, aTitle: ATitle, aURL: AURL, aLeadID: EID);
+
+dbn_managers_shortcut(eID: EID, eLast: ELast, eFirst: EFirst, eSalary: ESalary) <- 
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: 'Manager', eSalary: ESalary);
+
+
+% 4.3.2 Quantification of Variables
+
+dbn_CourseTitleOfferings(cTitle: CTitle, tDate: TDate) <- (exists CID)
+	(trainingCourse(cID: CID, cTitle: CTitle) and takes(cID: CID, tDate: TDate)  );
+
+% Table 4.11  DRC Sample Set Queries 
+
+dbn_ManagerOrProjectLead(eID: I,  eLast: L, eFirst: F, eTitle: T, eSalary: S) <- 
+	employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and
+	(T = 'Manager' or T = 'Project Lead');
+
+dbn_ManagersNoCourses(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) <- 
+	employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and T= 'Manager' and 
+	not takes(eID: I);
+
+dbn_ManagersTookCourses(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) <- 
+	employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and T='Manager' and takes(eID: I);
+
+%-------------------------------------------------------------------------
+
+dbn_ManagersNoDBCourses(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) <- 
+	employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and T = 'Manager' and
+	not (exists CID)(takes(eID: I, cID: CID) and trainingCourse(cID: CID, areaID: 'DB') );
+
+dbn_ManagersDBCourses(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) <-
+	 employee(eID: I, eLast: L, eFirst: F, eTitle: T, eSalary: S) and T = 'Manager' and
+	(exists CID)(takes(eID: I, cID: CID) and trainingCourse(cID: CID, areaID: 'DB') );
+
+% Relational completeness
+
+% Table 4.15  DRC Summary of Fundamental Employee Training Queries
+
+q_select(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) <-
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	ESalary > 100000;
+
+q_project(eLast: ELast, eFirst: EFirst, eTitle: ETitle) <- employee(eLast: ELast, eFirst: EFirst, eTitle: ETitle);
+
+managers(eID: EID) <- employee(eID: EID, eTitle: 'Manager');
+projectLeads(eID: EID) <- employee(eID: EID, eTitle: 'Project Lead');
+q_union(eID: EID) <- managers(eID: EID) or projectLeads(eID: EID);
+
+%managers(eID: EID) <- employee(eID: EID, eTitle: 'Manager');
+takenCourse(eID: EID) <- takes(eID: EID);
+q_difference(eID: EID) <- managers(eID: EID) and not takenCourse(eID: EID);
+
+q_cartesian_product(eID: EID, cID: CID) <- employee(eID: EID) and trainingCourse(cID: CID);
+
+%--------------------------------------------------------------------------------------
+
+% Table 4.16  DRC Summary of Additional Employee Training Queries
+
+%managers(eID: EID) <- employee(eID: EID, eTitle: 'Manager');
+%takenCourse(eID: EID) <- takes(eID: EID);
+q_intersection(eID: EID) <- managers(eID: EID) and takenCourse(eID: EID);
+
+q_theta_join(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary, aID: AID, aTitle: ATitle, aURL: AURL, aLeadID: ALeadID) <-
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	technologyArea(aID: AID, aTitle: ATitle, aURL: AURL, aLeadID: ALeadID) and EID=ALeadID;
+
+q_natural_join(cTitle: CTitle, tDate: TDate) <- (exists CID)
+	(trainingCourse(cID: CID, cTitle: CTitle) and
+	takes(cID: CID, tDate: TDate) );
+
+%q_division(eID: EID) <- employee(eID: EID,  ) and
+%	not (exists CID) (trainingCourse(cID: CID) and not takes(eID: EID, cID: CID) );
+
+% Aggregation and grouping 
+
+dbn_employeeMinSalary(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) <- 
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	not (exists Salary)(employee( eSalary: Salary) and Salary < ESalary);
+
+dbn_employeeTitleMinSalary(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) <- 
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	not (exists Salary)(employee(eTitle: ETitle,   eSalary: Salary) and Salary < ESalary);
+
+dbn_moreThanOneTechArea(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) <- 
+	employee(eID: EID, eLast: ELast, eFirst: EFirst, eTitle: ETitle,  eSalary: ESalary) and
+	(exists CID1, CID2, AID1, AID2)
+		(takes(eID: EID, cID: CID1) and trainingCourse(cID: CID1, areaID: AID1) and
+		 takes(eID: EID, cID: CID2) and trainingCourse(cID: CID2, areaID: AID2) and 
+		 AID1 <> AID2);
+% 4.4 Safety 
+
+dbn_safety(eID: EID) <- employee(eID: EID) and not technologyArea(aLeadID: EID);
