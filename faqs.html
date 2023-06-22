@@ -1,0 +1,95 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+
+<head>
+	<title>WinRDBI Frequently Asked Questions</title>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<meta name="author" content="Dusan Jovic">
+	<meta name="keywords" content="database, WINRDBI">
+	<meta name="description" content="The WINRDBI tool helps students learn a variety of query languages for relational databases.">
+	<link href="web_style/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="page_container">
+
+		<div id="page_header">
+			<div id="page_title">
+				Frequently Asked Questions
+			</div>
+		</div>
+
+		<div id="main_content">
+			<div class="title"><p class="alert_weak">WinRDBI since 2020</p></div>
+			<p>WinRDBI is compiled with OpenJDK 14.
+			WinRDBI now distributes the JRE needed to run the software.
+			To start WinRDBI, cd bin folder and double-click on the winrdbilauncher.bat for Windows and the winrdbilauncher for Mac OS.
+			The <b>sample</b> folder at the top level of the zip file provides the Employee Training Sample data and queries. 
+			The <b>doc</b> folder at the top level of the zip file includes the WinRDBI User Guide. Open the file UsersGuide.html to view locally. 
+			</p>
+			
+			<div class="title"><p class="alert_weak">Windows protected your PC</p></div>
+			<p>When running WinRDBI for the first time, you may get a popup that says "Windows protected your PC". 
+			Select the "More Info" text on the left. When a second popup appears, choose the "Run Anyway" button".
+			</p>
+			
+			<div class="title"><p class="alert_weak">Mac OS Unidentified Developer</p></div>
+			<p>When running WinRDBI for the first time, a popup will occur saying: "... can't be opened because it is from an unidentified developer". Go to System Preferences then Security and Privacy. On the General tab, look for the "Open Anyway" button. You may be prompted to Open again when you launch. Please see <a href="macoshelp.pdf">this document</a> for steps and screen shots..
+			</p>
+	
+			<div class="title"><p class="alert_weak">Read before creating your own .rdb file in WinRDBI...</p></div>
+			<p>A .RDB file is an ASCII text file that incorporates the database
+			schema and instance, which is subsequently loaded into Prolog. Please keep
+			the following in mind when defining the database schema:</p>
+			<ul>
+				<li>All table and attribute names must begin with a lowercase letter.</li>
+				<li>Do NOT use special characters in names.</li>
+			</ul>
+			<p>The database instance is stored in Prolog, and the data must be either a numeric
+			constant or a string constant, which is single-quoted in Prolog. Therefore,</p>
+			<ul>
+				<li>Enclose your strings in single quotes!</li>
+			</ul>
+			<p>We are working on revising WinRDBI to enforce these constraints. If a .RDB file
+			that you created does not load, open the .RDB file in your favorite text editor and
+			edit your data to conform to the above constraints.</p>
+
+			<div class="title_question_mark"><p>How do I install WinRDBI?</p></div>
+			<p>There is no explicit install. Extract the files from the zip file, cd bin and then double-click on winrdbilauncher.bat for Windows or winrdbilauncher for Mac OS. <br>
+</p>
+
+			<div class="title_question_mark"><p>Why can't I sort the column of a data table?</p></div>
+			<p>Currently, the sort capability of WinRDBI is limited to sorting the query results. This limitation is based on the interactions between sorting the data on the display and the storage of the underlying data.<br>
+</p>
+
+			<div class="title_question_mark"><p>Why does WinRDBI keep giving me the same error message after I fixed the problem in the query?</p></div>
+			<p>If this situation occurs, then WinRDBI is confused. Closing the query file and reopening the file does not work either.
+			You can either exit and restart WinRDBI, or copy the file to a new filename and open the new copy.</p>
+
+			<div id="content_footer">
+				<a href="index.html">Home</a> ::
+				<a href="download.html">Download</a> ::
+				<a href="faqs.html">FAQs</a> ::
+				<a href="samples.html">Samples</a> ::
+				<a href="UserGuide/UsersGuide.html" target="_blank">User Guide</a>
+				<br>
+				<a href="history.html">History</a> ::
+				<a href="mailto:WinRDBI@asu.edu">Contact</a>
+			</div>
+		</div>
+
+		<div id="nav_menu_bar">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="download.html">Download</a></li>
+				<li><a href="faqs.html">FAQs</a></li>
+				<li><a href="samples.html">Samples</a></li>
+				<li><a href="UserGuide/UsersGuide.html" target="_blank">User Guide</a></li>
+				<li><a href="history.html">History</a></li>
+				<li><a href="mailto:WinRDBI@asu.edu">Contact</a></li>
+			</ul>
+			<div id="nav_menu_bar_decor"></div>
+		</div>
+
+	</div>
+</body>
+</html>
